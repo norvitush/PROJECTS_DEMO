@@ -1,0 +1,6 @@
+[
+{"ChimneyState":"LightOff","Min_lvl":0},
+{"ChimneyState":"LightOn","Min_lvl":2},
+{"ChimneyState":"Smoked","Min_lvl":4},
+{"ChimneyState":"Numered","Min_lvl":7}
+]

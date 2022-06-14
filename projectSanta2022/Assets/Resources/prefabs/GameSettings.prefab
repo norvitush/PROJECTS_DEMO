@@ -1,0 +1,113 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5417586913094542589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5417586913094542590}
+  - component: {fileID: 5417586913094542591}
+  - component: {fileID: 5417586913094542588}
+  - component: {fileID: 5417586913094542584}
+  - component: {fileID: 5417586913094542585}
+  - component: {fileID: 3276393650180032497}
+  m_Layer: 0
+  m_Name: GameSettings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5417586913094542590
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5417586913094542589}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.1192064, y: -2.2560053, z: 18.858776}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5417586913094542591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5417586913094542589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72434eb79f44c7c4fb9bfcf810ccee1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FadeScreen: {fileID: 0}
+--- !u!114 &5417586913094542588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5417586913094542589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 242923f6e3e15044d8d1b25c6005f667, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsTestMode: 0
+  DropAccountState: 1
+  PlayerName: Cesar1
+  TopUIContainer: {fileID: 0}
+  BulletPrefab: {fileID: 0}
+  parent_forPoolOfCubs: {fileID: 0}
+  PopupTextPrefab: {fileID: 0}
+  parent_forPopupTextPrefab: {fileID: 0}
+  MAX_PRESET_LENGHT: 19
+--- !u!114 &5417586913094542584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5417586913094542589}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76709b77d48e9ca448270ff3967d8b91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Windows:
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &5417586913094542585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5417586913094542589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 252ad2dc66df3d542a0613d3c2829dce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curText: 
+  layout: {fileID: 0}
+  ShowMouseonGUI: 1
+--- !u!114 &3276393650180032497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5417586913094542589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 577d4208b6689d34290d0da3caa23d9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
