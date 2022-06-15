@@ -1,0 +1,9 @@
+[
+{"id":1,"Reward":3,"CoinsTarget":21,"PartsTarget":0},
+{"id":2,"Reward":5,"CoinsTarget":100,"PartsTarget":0},
+{"id":3,"Reward":8,"CoinsTarget":200,"PartsTarget":0},
+{"id":3,"Reward":10,"CoinsTarget":200,"PartsTarget":0},
+{"id":4,"Reward":15,"CoinsTarget":500,"PartsTarget":0},
+{"id":5,"Reward":20,"CoinsTarget":700,"PartsTarget":0},
+{"id":6,"Reward":100,"CoinsTarget":-1,"PartsTarget":0}
+]

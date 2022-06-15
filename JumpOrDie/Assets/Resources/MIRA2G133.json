@@ -1,0 +1,5 @@
+[{"Name":"Shield","Id":2000,"Chance1_100":0.2,"PrefabName":"itm_shield","ItemAction":1,"Randomoffset":3,"PreViewColor":{"r":11,"g":234,"b":255,"a":255}},
+{"Name":"Skin_part","Id":2001,"Chance1_100":0.02,"PrefabName":"itm_skinPart","ItemAction":2,"Randomoffset":5, "PreViewColor":{"r":0,"g":255,"b":0,"a":255}},
+{"Name":"Skin_partx2","Id":2002,"Chance1_100":0.1,"PrefabName":"itm_skinPart","ItemAction":2,"Randomoffset":5,"PreViewColor":{"r":0,"g":255,"b":0,"a":255}},
+{"Name":"Coin","Id":2003,"Chance1_100":0.8,"PrefabName":"itm_coin","ItemAction":0,"Randomoffset":0 ,"PreViewColor":{"r":255,"g":165,"b":0,"a":255}},
+{"Name":"Coin","Id":2004,"Chance1_100":0.8,"PrefabName":"itm_coin_bonus","ItemAction":4,"Randomoffset":0 ,"PreViewColor":{"r":255,"g":86,"b":0,"a":255}}]

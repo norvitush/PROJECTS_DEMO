@@ -1,0 +1,9 @@
+lastUpgrade=01012
+proj.pluginVersion=0.10.12
+proj.AppId=1061061356770
+and.BundleId=com.VOrbDevelopment.JumpSurvival
+proj.classDir=Assets
+proj.ConstantsClassName=GPGSIds
+and.ResourceData=%3c%3fxml+version%3d%221.0%22+encoding%3d%22utf-8%22%3f%3e%0d%0a%3c%21--Google+Play+game+services+IDs.+Save+this+file+as+res%2fvalues%2fgames-ids.xml+in+your+project.--%3e%0d%0a%3cresources%3e%0d%0a++%3c%21--app_id--%3e%0d%0a++%3cstring+name%3d%22app_id%22+translatable%3d%22false%22%3e1061061356770%3c%2fstring%3e%0d%0a++%3c%21--package_name--%3e%0d%0a++%3cstring+name%3d%22package_name%22+translatable%3d%22false%22%3ecom.VOrbDevelopment.JumpSurvival%3c%2fstring%3e%0d%0a++%3c%21--achievement+Best+One--%3e%0d%0a++%3cstring+name%3d%22achievement_best_one%22+translatable%3d%22false%22%3eCgkI4tm94fAeEAIQAw%3c%2fstring%3e%0d%0a++%3c%21--achievement+Crazy+Frog--%3e%0d%0a++%3cstring+name%3d%22achievement_crazy_frog%22+translatable%3d%22false%22%3eCgkI4tm94fAeEAIQBA%3c%2fstring%3e%0d%0a++%3c%21--achievement+Art+collector--%3e%0d%0a++%3cstring+name%3d%22achievement_art_collector%22+translatable%3d%22false%22%3eCgkI4tm94fAeEAIQBQ%3c%2fstring%3e%0d%0a++%3c%21--achievement+The+darling+of+fate--%3e%0d%0a++%3cstring+name%3d%22achievement_the_darling_of_fate%22+translatable%3d%22false%22%3eCgkI4tm94fAeEAIQBg%3c%2fstring%3e%0d%0a++%3c%21--achievement+Diying+master--%3e%0d%0a++%3cstring+name%3d%22achievement_diying_master%22+translatable%3d%22false%22%3eCgkI4tm94fAeEAIQBw%3c%2fstring%3e%0d%0a++%3c%21--leaderboard+TOP+World+Jumpers--%3e%0d%0a++%3cstring+name%3d%22leaderboard_top_world_jumpers%22+translatable%3d%22false%22%3eCgkI4tm94fAeEAIQCA%3c%2fstring%3e%0d%0a++%3c%21--leaderboard+Top+Time+killers--%3e%0d%0a++%3cstring+name%3d%22leaderboard_top_time_killers%22+translatable%3d%22false%22%3eCgkI4tm94fAeEAIQCg%3c%2fstring%3e%0d%0a%3c%2fresources%3e
+and.ClientId=1061061356770-0m64ait9p15u6suv898omsu2euvi7m8s.apps.googleusercontent.com
+android.SetupDone=true

@@ -1,0 +1,15 @@
+[
+{"PrefabName":"av_peng","Id":1,"FullSkinParts":0,"MatColor":{"r":226,"g":235,"b":255,"a":255},"RareType":0,"SkinName":"Rico"},
+{"PrefabName":"av_rock","Id":2,"FullSkinParts":12,"MatColor":{"r":155,"g":173,"b":183,"a":255},"RareType":1,"SkinName":"Simple Stone"},
+{"PrefabName":"av_slime","Id":3,"FullSkinParts":25,"MatColor":{"r":255,"g":70,"b":119,"a":255},"RareType":1,"SkinName":"Pink Slime"},
+{"PrefabName":"av_frog","Id":4,"FullSkinParts":35,"MatColor":{"r":106,"g":190,"b":48,"a":255},"RareType":1,"SkinName":"Mr.Toad"}, 
+{"PrefabName":"av_bread","Id":5, "FullSkinParts":350,"MatColor":{"r":255,"g":240,"b":190,"a":255},"RareType":1,"SkinName":"Evil Toast"},
+{"PrefabName":"av_oct","Id":6, "FullSkinParts":480,"MatColor":{"r":253,"g":237,"b":206,"a":255},"RareType":1,"SkinName":"Paul"},
+{"PrefabName":"av_mushro","Id":7, "FullSkinParts":550,"MatColor":{"r":255,"g":243,"b":215,"a":255},"RareType":1,"SkinName":"Agent M"},
+{"PrefabName":"av_one_eye","Id":8,"FullSkinParts":18,"MatColor":{"r":99,"g":155,"b":255,"a":255},"RareType":2,"SkinName":"Cycloppo"},
+{"PrefabName":"av_panda_v3","Id":9, "FullSkinParts":28,"MatColor": {"r":246,"g":243,"b":235,"a":255},"RareType":2,"SkinName":"Master Po"},
+{"PrefabName":"av_krab","Id":10, "FullSkinParts":35,"MatColor":{"r":255,"g":240,"b":185,"a":255},"RareType":2,"SkinName":"Eugene H. Krabs"},
+{"PrefabName":"av_among","Id":11, "FullSkinParts":45,"MatColor":{"r":255,"g":62,"b":56,"a":255},"RareType":2,"SkinName":"Impostor"},
+{"PrefabName":"av_steave","Id":12, "FullSkinParts":75,"MatColor":{"r":199,"g":120,"b":77,"a":255},"RareType":2,"SkinName":"Noob Steve"},
+{"PrefabName":"av_brawlbox","Id":13, "FullSkinParts":100,"MatColor":{"r":92,"g":119,"b":255,"a":255},"RareType":2,"SkinName":"Loot Box"}
+]

@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8163137732588455445
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8163137732588455447}
+  - component: {fileID: 8163137732588455444}
+  - component: {fileID: 8163137732588455446}
+  m_Layer: 0
+  m_Name: GLOB_GameService
+  m_TagString: Untagged
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &8163137732588455447
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8163137732588455445}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 388.53, y: 150.81, z: -409}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8163137732588455444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8163137732588455445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e75045af41491a44b36dd47c25dbc8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartText: TAP FOR JUMP !
+  CurrentSkin:
+    prefabName: 
+    skin_ID: 0
+    CollectedParts: 0
+    fullSkinParts: 0
+    cl:
+      serializedVersion: 2
+      rgba: 0
+    rareType: 0
+  Jumpie_anim: {fileID: 0}
+  AvatarRig: {fileID: 0}
+--- !u!114 &8163137732588455446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8163137732588455445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 577d4208b6689d34290d0da3caa23d9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SplashText: {fileID: 0}
+  StartButton: {fileID: 0}
+  ReStartButton: {fileID: 0}

@@ -1,0 +1,85 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using EzySlice;
+
+public class cutcutplane : MonoBehaviour
+{
+    public Material mat;
+    public LayerMask mask;
+
+    public GameObject gg;
+
+    void CopySpecialComponents(GameObject _sourceGO, GameObject _targetGO)
+    {
+        foreach (var component in _sourceGO.GetComponents<Component>())
+        {
+            var componentType = component.GetType();
+            if (componentType != typeof(Transform) && componentType != typeof(MeshFilter) && componentType != typeof(MeshRenderer) && componentType != typeof(MeshCollider)) //  && componentType != typeof(MeshRenderer)
+            {
+                UnityEditorInternal.ComponentUtility.CopyComponent(component);
+                UnityEditorInternal.ComponentUtility.PasteComponentAsNew(_targetGO);
+                //_targetGO.AddComponent<MeshCollider>().convex = true;
+            }
+        }
+    }
+    //void Start()
+    //{
+    //    Debug.Log(GetComponent<MeshFilter>().sharedMesh.bounds.size*100f);
+    //}
+    // Update is called once per frame
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (gg != null)
+            { 
+                SlicedHull hull = gg.Slice(transform.position, transform.up, mat);
+                if (hull != null)
+                {
+                    GameObject cutupobj = hull.CreateUpperHull(gg, mat);
+                    GameObject cutlowobj = hull.CreateLowerHull(gg, mat);
+
+                    cutupobj.AddComponent<MeshCollider>().convex = true;
+                    cutlowobj.AddComponent<MeshCollider>().convex = true;
+
+                    Vector3 boup = cutupobj.GetComponent<MeshFilter>().sharedMesh.bounds.size * 100f;
+                    Vector3 bolow = cutlowobj.GetComponent<MeshFilter>().sharedMesh.bounds.size * 100f;
+                    Debug.Log(boup.magnitude + " : " + bolow.magnitude);
+                    if (boup.magnitude > bolow.magnitude)
+                    {
+                        CopySpecialComponents(gg, cutupobj);
+                        cutlowobj.AddComponent<Rigidbody>();
+                    }
+                    else
+                    {
+                        CopySpecialComponents(gg, cutlowobj);
+                        cutupobj.AddComponent<Rigidbody>();
+                    }
+                    Destroy(gg);
+                }
+             }
+
+                //gameObject cutupobj = keslename.CreateUpperHull(gg, mat);
+                //gameObject cutlowobj = keslename.CreateLowerHull(gg, mat);
+
+            
+
+            //Collider[] kollcheck = Physics.OverlapBox(transform.position, new Vector3(1f, 1f, 1f), transform.rotation, mask);
+
+            //foreach (Collider nesne in kollcheck)
+            //{
+            //     SlicedHull keslename = kes(nesne.GetComponent<Collider>().GameObject, mat);
+            ////    gameObject cutupobj = keslename.CreateUpperHull(nesne.gameObject,mat);
+            ////    gameObject cutlowobj = keslename.CreateLowerHull(nesne.gameObject,mat);
+
+            ////    Destroy(nesne.gamObject);
+            //}
+        }
+    }
+
+    //public SlicedHull kes(GameObject obj, Material mat = null)
+    //{
+    //    return obj.Slice(transform.position, transform.up, mat);
+    //}
+}
