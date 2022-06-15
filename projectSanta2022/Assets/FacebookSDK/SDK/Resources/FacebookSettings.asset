@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedAppIndex: 0
   clientTokens:
-  - d1bf825af43101bf33da7e83a766046e
+  - 
   appIds:
-  - 599851547987767
+  - 0
   appLabels:
-  - 'Santa Jam: Xmas basketball 3D'
+  - App Name
   cookie: 1
   logging: 1
   status: 1
   xfbml: 0
   frictionlessRequests: 1
-  androidKeystorePath: D:/Unity/santa/KeyStore/santaJam.keystore
+  androidKeystorePath: 
   iosURLSuffix: 
   appLinkSchemes:
   - list: []

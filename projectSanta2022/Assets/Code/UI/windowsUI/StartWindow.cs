@@ -42,9 +42,8 @@ public class StartWindow : Window
         TapEvent.AddListener(()=> { });
         SvipeEvent.RemoveAllListeners();
         SvipeEvent.AddListener(()=> { });
-
-
         _levelsContainer.SetActive(Time.timeScale != 0);
+
         if (Time.timeScale == 0)
         {
             _pauseWindow?.Open(ChangeCurrentWindow);  //opening the pause window   

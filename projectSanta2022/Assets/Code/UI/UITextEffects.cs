@@ -54,13 +54,6 @@ namespace VOrb.CubesWar
             {
                
                 SplashText.gameObject.SetActive(true);
-                //SplashText.gameObject.SetActive(true, 3.5f, ObjectPool.Instance,()=> {
-                //    if (true)
-                //    {
-                //        ObjectPool.ReturnToPool(SplashText.gameObject, preset.PoolObjectType);
-                //    }
-
-                    //});
             }
                 
             
