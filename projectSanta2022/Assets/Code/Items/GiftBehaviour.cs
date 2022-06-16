@@ -89,7 +89,7 @@ namespace VOrb.CubesWar
                 case GiftAnimations.Throw:
                     if (_selfBody != null)
                     {
-                      _PlayCubThrow = this.TryStartCoroutine(AnimationThrow(GameService.Instance.GunController.PhysicThrow,
+                      _PlayCubThrow = this.TryStartCoroutine(AnimationThrow(true,
                           GameService.Instance.GunController.ThrowTarget));
                     }
                     break;
@@ -143,13 +143,7 @@ namespace VOrb.CubesWar
 
                 progress = expiredSeconds / ThrowAnimDuration;
 
-                transform.localScale = CanUseScale ? StartScale * _bodyScaleThrow.Evaluate(progress) : StartScale;
-                if (!isPhysicThrow)
-                {                    
-                    float ix = speed * Mathf.Cos(angle);
-                    float iy = speed * Mathf.Sin(angle) * expiredSeconds - (Physics.gravity.magnitude * (expiredSeconds * expiredSeconds) / 2f);                    
-                    transform.position = Vector3.Lerp(StartPosition, targetPoint, progress).SetYTo(StartPosition.y + iy);
-                }
+                transform.localScale = CanUseScale ? StartScale * _bodyScaleThrow.Evaluate(progress) : StartScale;               
                 
                 yield return null;
             }
@@ -191,7 +185,7 @@ namespace VOrb.CubesWar
             {
                 //земелька
                 UpdateContent(new DeactivatedState(), Data);
-                GameService.Instance.GameElements.GetComponentInChildren<HomesLife>().MovableObjects.Add(new PooledObject(gameObject,PooledObjectType.Gift));
+                GameService.Instance.GameElements.GetComponentInChildren<HomesLife>().PushToMoveList(new PooledObject(gameObject,PooledObjectType.Gift));
             }
 
             if (Chimney != null)
@@ -236,7 +230,7 @@ namespace VOrb.CubesWar
                     int points = Mathf.Clamp(Mathf.CeilToInt(3 * GameService.Instance.currentLevel.Speed), 1, 10);
                     string outString = " +";
                     TextEffectBuilder textBuilder = new TextEffectBuilder().MakeMovable().MakeColored(new Color32(255,176,0,255));                     
-                    if (SceneLoader.sceneSettings.IsTestMode)
+                    if (SceneLoader.SceneSettings.IsTestMode)
                     {
                         points += 500;
                     }
@@ -257,7 +251,7 @@ namespace VOrb.CubesWar
                         ); 
                     //UIWindowsManager.GetWindow<MainWindow>().SetSmilesInfo(++GameService.Instance.ScoreGiftsCount);
                     Chimney.TurnOff();
-                    Chimney.GetComponentInParent<MeshRenderer>().material.mainTexture = SceneLoader.sceneSettings.GrayTexture;
+                    Chimney.GetComponentInParent<MeshRenderer>().material.mainTexture = SceneLoader.SceneSettings.GrayTexture;
                     Chimney.transform.parent.Find("props").gameObject.SetActive(true);
                     SoundService.PlaySound(Sound.ChimneySuccsess);
 

@@ -11,7 +11,6 @@ using VOrb.CubesWar.Levels;
 
 public class StartWindow : Window
 {
-    [SerializeField] private GameObject debugPanel;
     [SerializeField]private GameObject _levelsContainer;
     [SerializeField] private WindowPause _pauseWindow;
     [SerializeField] private TextMeshProUGUI _score;
@@ -31,8 +30,6 @@ public class StartWindow : Window
         }
 
     }
-
-    public void ShowDebug() => debugPanel.SetActive(!debugPanel.activeInHierarchy);
 
     protected override void SelfOpen()
     {
@@ -74,7 +71,7 @@ public void BtnStartClick(int level = 1)
         SoundService.PlayPauseBackground(false);
         Close();
         MainWindow mn = UIWindowsManager.GetWindow<MainWindow>();
-        GameService.ActiveNow = UIWindowsManager.GetWindow<MainWindow>();
+        GameService.Instance.ActiveNow = UIWindowsManager.GetWindow<MainWindow>();
         var levelInfo = DataBaseManager.Instance.LevelsInfo.Find((lvl) => lvl.LevelNumber == level);
         if (levelInfo!=null)
         {
@@ -85,7 +82,7 @@ public void BtnStartClick(int level = 1)
 
     public void NoAdsClick()
     {
-        Dimmed = true;
+        //Dimmed = true;
     }
    
     public void BuyFailed()

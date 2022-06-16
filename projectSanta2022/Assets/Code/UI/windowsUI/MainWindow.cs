@@ -1,14 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 using VOrb.CubesWar;
 using TMPro;
-using UnityEngine.Events;
 using System;
-using System.Linq;
 using UnityEngine.UI;
-using GameAnalyticsSDK;
 
 public class MainWindow : Window
 {
@@ -42,11 +36,7 @@ public class MainWindow : Window
 
 
     [Header("События:")]
-    public Action StartAfterLoad;
-
-
-   // public delegate void whenReady();
-
+    public Action loadCallback;
 
 
     protected override void SelfClose()
@@ -74,9 +64,9 @@ public class MainWindow : Window
         SvipeEvent.AddListener(() => { });
 
         gameObject.SetActive(true);
-        GameService.ActiveNow = this;
+        GameService.Instance.ActiveNow = this;
 
-        StartAfterLoad?.Invoke();
+        loadCallback?.Invoke();
 
 
     }
@@ -87,7 +77,7 @@ public class MainWindow : Window
         //settings_window?.Open(ChangeCurrentWindow);  //opening the settings window   
         
     }
-    public void TryOpenLevelResultsPopup(Action invokeAfterClose)
+    public void TryOpenLevelResultsPopup(Action callback)
     {
        
         int stars = GameService.Instance.CalculateStarsResult();
@@ -95,33 +85,16 @@ public class MainWindow : Window
         if (stars > 0)
         {
             _starsPath.SetLevelStars(GameService.Instance.Current_level, stars);
-            SceneLoader.Instance.FB_manager?.LevelEnded(GameService.Instance.currentLevel.LevelNumber);
-            _resultsWindow.Init(invokeAfterClose, stars);
+            _resultsWindow.Init(callback, stars);
             _resultsWindow?.Open(ChangeCurrentWindow);
         }
         else
         {
-            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Fail, "Level " + GameService.Instance.currentLevel.LevelNumber.ToString(),
-            GameService.Instance.ScoreGiftsCount);
-
             if (GameService.Instance.NoAds == 0)
             {
-                #if UNITY_EDITOR
-                                Debuger.AddToLayout("*IS_else: Interstitial Try SHOW!");
-
-                #elif UNITY_ANDROID
-                          Debuger.AddToLayout("*IS: Interstitial Try SHOW!");
-                          if (IronSource.Agent.isInterstitialReady())
-                           {
-                              Debuger.AddToLayout("*IS: Interstitial Try SHOW!  -   ReadyForShow");
-
-                             /// показываем межстраничную                    
-
-                             IronSource.Agent.showInterstitial();
-                          }
-                #endif
+              //interstitial
             }
-            invokeAfterClose?.Invoke();
+            callback?.Invoke();
         }
        
     }
@@ -137,23 +110,23 @@ public class MainWindow : Window
             if (GameService.Instance.GameStarted && Time.timeScale == 0)
             {
                 GameService.Instance.Pause();
-                GameService.ActiveNow = this;
+                GameService.Instance.ActiveNow = this;
             }
         };
-        //GameService.ActiveNow = _startInfoWindow;
+        //GameService.Instance.ActiveNow = _startInfoWindow;
         _startInfoWindow?.Open(ChangeCurrentWindow);  //opening the pause window  
     }
     public void OpenStartWindow()
     {
         HideMainUI();
-        GameService.ActiveNow = start_window;
+        GameService.Instance.ActiveNow = start_window;
         start_window?.Open(ChangeCurrentWindow);  //opening the settings window  
         
     }
     public void OpenRestartWindow()
     {
         HideMainUI();
-        //GameService.ActiveNow = restart_window;
+        //GameService.Instance.ActiveNow = restart_window;
         //restart_window?.Open(ChangeCurrentWindow);  //opening the settings window    
 
     }

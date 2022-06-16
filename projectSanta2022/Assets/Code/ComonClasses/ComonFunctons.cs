@@ -11,14 +11,7 @@ using System.Collections;
  класс CFVectors -  для расширений и дополнительных функций работы с векторами
  CFGameObjects - класс расширений для GameObject
 */
-namespace VOrb.Extensions
-{
-    public static class VorbExtensions
-    {
-        
-    }
 
-}    
 namespace VOrb
 {
     /// <summary>
@@ -160,7 +153,6 @@ namespace VOrb
 
     public static class CFMesh
     {
-
         public static float AreaOfTriangle(Vector3 p1, Vector3 p2, Vector3 p3)
         {
             float a = Vector3.Distance(p1, p2);
@@ -181,6 +173,9 @@ namespace VOrb
 
             return (1.0f / 6.0f) * (-v321 + v231 + v312 - v132 - v213 + v123);
         }
+        /// <summary>
+        /// Вычисление объема ограниченного мешем
+        /// </summary>
         public static float AreaOfMesh(this Mesh mesh)
         {
             float area = 0f;

@@ -8,8 +8,6 @@ using TMPro;
 using UnityEngine.Events;
 using System;
 using System.Linq;
-using GameAnalyticsSDK;
-using GameAnalyticsSDK.Events;
 
 public class LevelResultWindow : Window
 {
@@ -33,25 +31,21 @@ public class LevelResultWindow : Window
             gameObject.SetActive(false);
             //if (activateAfter!= null)
             //{
-            // GameService.ActiveNow = activateAfter;
+            // GameService.Instance.ActiveNow = activateAfter;
             //}
             _invokeAfterClose?.Invoke();
-
-
         }
-  
     }
 
     protected override void SelfOpen()      //opening effects and other beauty-here
     {
-
         TapEvent.RemoveAllListeners();
         SvipeEvent.RemoveAllListeners();
         TapEvent.AddListener(() => {});
         SvipeEvent.AddListener(() => { });
 
         gameObject.SetActive(true);
-        GameService.ActiveNow = this;
+        GameService.Instance.ActiveNow = this;
         foreach (var item in _Stars)
         {
             item?.SetActive(false);
@@ -60,13 +54,11 @@ public class LevelResultWindow : Window
         {
             item?.SetActive(false);
         }
-
         StartCoroutine(StarsShow(_starscount));
     }
    
     public void OnClose()
     {
-       
         Close();
     }
 
@@ -74,11 +66,6 @@ public class LevelResultWindow : Window
     {
         yield return null;
       
-        Dictionary<string, object> fields = new Dictionary<string, object>();
-        fields.Add("Stars", count);
-        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, "Level " + GameService.Instance.currentLevel.LevelNumber.ToString(),
-             GameService.Instance.ScoreGiftsCount,fields);
-
         _smilesRewardText.text = (GameService.Instance.ScoreGiftsCount * GameService.Instance.multiplyX).ToString();
         _particleStars[0]?.SetActive(true);
         for (int i = 1; i < count+1; i++)
@@ -98,24 +85,7 @@ public class LevelResultWindow : Window
 
     public void InterstitialShow()
     {
-    #if UNITY_ANDROID && !UNITY_EDITOR
-
-        Debuger.AddToLayout("*IS: Interstitial Try SHOW!");
-        if (IronSource.Agent.isInterstitialReady())
-        {
-            Debuger.AddToLayout("*IS: Interstitial Try SHOW!  -   ReadyForShow");
-
-            /// показываем межстраничную                    
-
-            IronSource.Agent.showInterstitial();
-        }
-        else
-        {
-                               
-        }
-#else
-        Debuger.AddToLayout("*IS_else: Interstitial Try SHOW!");
-#endif
+        //interstitial
     }
 
 

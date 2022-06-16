@@ -8,21 +8,23 @@ namespace VOrb
         public static Object _lock = new Object();
         protected void Awake()
         {
-            if (Instance == null)       //if place is free
+            if (Instance == null)       
             {
                 lock (_lock)
                 {
-                    if (Instance == null)       //if place is free
+                    if (Instance == null)       //DOUBLE TAP
                     {
                         Instance = (InhClass)this;
                         Init();
                     }
+                    else  
+                        Destroy(gameObject);
+                    
                 }
             }
-            else  // or occupied and its not this instance
-            {
+            else 
                 Destroy(gameObject);
-            }
+            
         }
         protected virtual void Init()
         {

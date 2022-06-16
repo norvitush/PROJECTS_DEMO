@@ -36,7 +36,7 @@ public class UIWindowsManager : Singlton<UIWindowsManager>
                 else
                     window.Close();
             }        
-        selected.StartAfterLoad = selected.OpenStartWindow;
+        selected.loadCallback = selected.OpenStartWindow;
         selected.Open(delegate { });
     }
 

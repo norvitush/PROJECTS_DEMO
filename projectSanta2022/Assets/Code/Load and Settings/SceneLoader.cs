@@ -6,7 +6,6 @@ using UnityEngine.UI;
 using Timers;
 using VOrb.CubesWar;
 using VOrb;
-using System.Linq;
 using System;
 //using GooglePlayGames;
 //using UnityEngine.SocialPlatforms;
@@ -15,30 +14,33 @@ using System;
 public class SceneLoader : Singlton<SceneLoader>
 {
 
-    public FacebookManager FB_manager = null;
-    public static SceneSettings sceneSettings;
-    
-    private UIWindowsManager WindowController;     
-    public Image FadeScreen;
+    private static SceneSettings _sceneSettings;
+
+    private UIWindowsManager _windowController;
+    [SerializeField] private Image _fadeScreen;
+
+    public static SceneSettings SceneSettings { get => _sceneSettings; private set => _sceneSettings = value; }
+    public Image FadeScreen => _fadeScreen; 
 
     protected override void Init()
     {
         base.Init();        
 
         //Получение игровых настроек
-        sceneSettings = GetComponent<SceneSettings>();
+        SceneSettings = GetComponent<SceneSettings>();
       
         //Менеджер окон
-        WindowController = GetComponent<UIWindowsManager>();
+        _windowController = GetComponent<UIWindowsManager>();
 
         //Создание игрового менеджера для получения всех объектов
         GameObject GameManager = Instantiate(Resources.Load("prefabs/GLOB_GameService", typeof(GameObject))) as GameObject;             
         GameManager.SetActive(true);
         GameObject sensor = Instantiate(Resources.Load("prefabs/UITouchPanel", typeof(GameObject)),
-                            sceneSettings.TopUIContainer.transform) as GameObject; 
+                            SceneSettings.TopUISensor.transform) as GameObject; 
 
         //Создаем и записываем Игровому менеджеру инфу о сенсоре экрана
         GameService.Instance.Sensor = sensor.GetComponent<TouchRegistrator>();
+        GameService.Instance.Sensor.SetDependences(GameService.Instance);
         GameManager.name = "GLOB_GameService";
 
         //Создаем локальную базу данных
@@ -47,42 +49,42 @@ public class SceneLoader : Singlton<SceneLoader>
         DataManager.name = "GLOB_DataBase";
 
         ////Пул объектов
-        GameObject objPool1 = Instantiate(Resources.Load("prefabs/GLOB_ObjectsPOOL", typeof(GameObject))) as GameObject;           
-        ObjectPoolManager CubsPool = objPool1.GetComponent<ObjectPoolManager>();
+        GameObject PoolManagerObject = Instantiate(Resources.Load("prefabs/GLOB_ObjectsPOOL", typeof(GameObject))) as GameObject;           
+        ObjectPoolManager PoolManager = PoolManagerObject.GetComponent<ObjectPoolManager>();
 
 
-        CubsPool.funcForInvoke.AddListener(InitAfterCreatePool);
+        PoolManager.funcForInvoke.AddListener(InitAfterCreatePool);
 
-        CubsPool.AllPools.Add(new ObjectPool(PooledObjectType.Gift, sceneSettings.BulletCubePrefab, 10, 
-                              sceneSettings.parent_forPoolOfCubs));
+        PoolManager.AllPools.Add(new ObjectPool(PooledObjectType.Gift, SceneSettings.GiftPrefab, 10, 
+                              SceneSettings.ParentForPoolOfGifts));
 
-        CubsPool.AllPools.Add(new ObjectPool(PooledObjectType.Brick, sceneSettings.StonePrefab, 5,
-                      sceneSettings.parent_forPoolOfCubs));
+        PoolManager.AllPools.Add(new ObjectPool(PooledObjectType.Brick, SceneSettings.StonePrefab, 5,
+                      SceneSettings.ParentForPoolOfGifts));
 
 
         int minTypeNum = (int)PooledObjectType.NumberPopup1_smile;
-        for (int i = 0; i < sceneSettings.NubersPopupTextPrefabs.Length; i++)
+        for (int i = 0; i < SceneSettings.PopupsSmilesPrefabs.Length; i++)
         {
-            CubsPool.AllPools.Add(new ObjectPool((PooledObjectType)minTypeNum + i, sceneSettings.NubersPopupTextPrefabs[i], 5,
-                      sceneSettings.parent_forPopupTextPrefab));
+            PoolManager.AllPools.Add(new ObjectPool((PooledObjectType)minTypeNum + i, SceneSettings.PopupsSmilesPrefabs[i], 5,
+                      SceneSettings.UIEffectsContainer));
         }
 
         minTypeNum = (int)PooledObjectType.Homes1;
-        for (int i = 0; i < sceneSettings.HomesPrefab.Length; i++)
+        for (int i = 0; i < SceneSettings.HomesPrefab.Length; i++)
         {
-            CubsPool.AllPools.Add(new ObjectPool((PooledObjectType)minTypeNum + i, sceneSettings.HomesPrefab[i], 5,
-                      sceneSettings.parent_forPoolOfCubs));
+            PoolManager.AllPools.Add(new ObjectPool((PooledObjectType)minTypeNum + i, SceneSettings.HomesPrefab[i], 5,
+                      SceneSettings.ParentForPoolOfGifts));
         }
         minTypeNum = (int)PooledObjectType.Envir1;
-        for (int i = 0; i < sceneSettings.EnvirPrefab.Length; i++)
+        for (int i = 0; i < SceneSettings.EnvirPrefab.Length; i++)
         {
-            CubsPool.AllPools.Add(new ObjectPool((PooledObjectType)minTypeNum + i, sceneSettings.EnvirPrefab[i], 10,
-                      sceneSettings.parent_forPoolOfCubs));
+            PoolManager.AllPools.Add(new ObjectPool((PooledObjectType)minTypeNum + i, SceneSettings.EnvirPrefab[i], 10,
+                      SceneSettings.ParentForPoolOfGifts));
         }
 
 
-        objPool1.SetActive(true);
-        objPool1.name = "GLOB_ObjectPool";        
+        PoolManagerObject.SetActive(true);
+        PoolManagerObject.name = "GLOB_ObjectPool";        
 
     }
 
@@ -93,9 +95,9 @@ public class SceneLoader : Singlton<SceneLoader>
         ////Продолжаем загрузку после инициализации
         GameService.Instance.ReceiveContainers();
         GameService.Instance.LoadFields();              
-        WindowController.enabled = true;
+        _windowController.enabled = true;
 
-        Destroy(sceneSettings.BulletCubePrefab);
+        Destroy(SceneSettings.GiftPrefab);
    
 
         GameObject TimerManager = new GameObject("GLOB_GameTimer", typeof(TimersManager));
@@ -114,7 +116,7 @@ public class SceneLoader : Singlton<SceneLoader>
         ///
         GameService.Instance.GlobalScore = 0;
 
-        if (sceneSettings.DropAccountState)
+        if (SceneSettings.DropAccountState)
         {
             GameStorageOperator.DropSavedPlayerInfo();
             Debug.Log("Данные игрока очищены!");
@@ -122,8 +124,8 @@ public class SceneLoader : Singlton<SceneLoader>
         }
         else
         {
-            Debug.Log(sceneSettings.PlayerName + SystemInfo.deviceUniqueIdentifier);
-            string player = sceneSettings.PlayerName + SystemInfo.deviceUniqueIdentifier;
+            Debug.Log(SceneSettings.PlayerName + SystemInfo.deviceUniqueIdentifier);
+            string player = SceneSettings.PlayerName + SystemInfo.deviceUniqueIdentifier;
             string loaded = (string)GameStorageOperator.GetFromDevice(GameStorageOperator.PlayerParamNames.Player, "");
             if (loaded == "")
             {

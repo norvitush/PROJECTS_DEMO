@@ -4,35 +4,15 @@ using UnityEngine.Events;
 
 namespace VOrb.CubesWar
 {
-    public struct JoystykBaseConst
-    {
-        public const int NO_ID = 999;
-        public const int BTN_DOWN = 1;
-        public const int BTN_UP = 2;        
-        public const float ZOrder_joystik = 0f;
-    }
-
-    [System.Serializable]
-    public struct JoystykData
-    {
-        public Vector2 Direction;
-        public float Angle;
-        public float Power;
-        public float Speed;
-        public int Horizontal;
-        public int Vertical;
-        public bool DirectionChoosed;
-    }
 
     public class Joystik: MonoBehaviour, ITouchSensetive 
     {
-
-        public GameObject ParentContainer;
-        public GameObject Button;
-        [SerializeField] private GameObject JoystikZone;
+        [SerializeField] private GameObject _parentContainer;        
+        [SerializeField] private GameObject _joystikZone; // объект картинки(если используется) зоны джостика
         [SerializeField] private JoystykData _outputInfo;
         [SerializeField] private float _minAlfa = 0.35f;
         [SerializeField] private float _maxAlfa = 0.70f;
+        [SerializeField] public bool DirectionChoosed { get => _outputInfo.DirectionChoosed; private set => _outputInfo.DirectionChoosed = value; }
 
         public bool isStatic = true;
         public Vector2 Direction { get => _outputInfo.Direction; private set => _outputInfo.Direction = value; }
@@ -41,13 +21,12 @@ namespace VOrb.CubesWar
         public float Speed { get => _outputInfo.Speed; private set => _outputInfo.Speed = value; }
         public int Horizontal { get => _outputInfo.Horizontal; private set => _outputInfo.Horizontal = value; }
         public int Vertical { get => _outputInfo.Vertical; private set => _outputInfo.Vertical = value; }
-        [SerializeField] public bool DirectionChoosed { get => _outputInfo.DirectionChoosed; private set => _outputInfo.DirectionChoosed = value; }
+        
         public UnityEvent TapEvent { get ; set; }
         public UnityEvent SvipeEvent { get; set; }
         public TouchEventResponse[] responses { get; set ; }
-        public int ThisTapID { get; private set; }
+        public int TapID { get; private set; }
 
-        private Vector3 _p_StartPosition;
         private Vector3 _p_StartPosition_LOCAL;
         private LifeZone _lifeZone;
         private float _TapStartTime;        
@@ -61,9 +40,10 @@ namespace VOrb.CubesWar
         {
             if (GameService.Instance.Sensor != null)
             {
-                SetJoystikParam(true, GameService.Instance.Sensor.CamMin + new Vector2(20,100), 
-                    new Vector2(GameService.Instance.Sensor.CamMax.x-20,
-                    GameService.Instance.Sensor.CamMax.y/2+100) );
+                TouchRegistrator sensor = GameService.Instance.Sensor;
+                SetJoystikParam(true, sensor.CamMin + new Vector2(sensor.Width*.05f, sensor.Height * .05f),
+                    sensor.CamMax - new Vector2(sensor.Width * .05f,sensor.Height/2-sensor.Height*.05f)
+                );
             }
             else
                 SetJoystikParam(true);
@@ -80,63 +60,49 @@ namespace VOrb.CubesWar
             };
 
 
-            _p_StartPosition_LOCAL = ParentContainer.transform.localPosition;
+            _p_StartPosition_LOCAL = _parentContainer.transform.localPosition;
             DirectionChoosed = false;
             _cam = Camera.main;
-            ThisTapID = JoystykBaseConst.NO_ID;
+            TapID = JoystykBaseConst.NO_ID;
             _thisTapCoord = Vector2.zero;
-            _p_ZoneRadius = (int)(JoystikZone.gameObject.GetComponent<RectTransform>().rect.width/2);
+            _p_ZoneRadius = (int)(_joystikZone.gameObject.GetComponent<RectTransform>().rect.width/2);
 
             Vector3 CenterWorldPoint, CenterScreenPoint, WorldRightContainerPoint, ScreenRightContainerPoint;
-            CenterWorldPoint = JoystikZone.transform.position;
+            CenterWorldPoint = _joystikZone.transform.position;
             CenterScreenPoint = _cam.WorldToScreenPoint(CenterWorldPoint);
             
-            _p_JostikPos_nul = _p_StartPosition = CenterScreenPoint;
+            _p_JostikPos_nul = CenterScreenPoint;
 
 
-            Vector3 right = JoystikZone.gameObject.GetComponent<RectTransform>().rect.center.GetVector3(CenterWorldPoint.z) + new Vector3(_p_ZoneRadius, 0, 0);
-            WorldRightContainerPoint = JoystikZone.gameObject.GetComponent<RectTransform>().TransformPoint(right);
+            Vector3 right = _joystikZone.gameObject.GetComponent<RectTransform>().rect.center.GetVector3(CenterWorldPoint.z) + new Vector3(_p_ZoneRadius, 0, 0);
+            WorldRightContainerPoint = _joystikZone.gameObject.GetComponent<RectTransform>().TransformPoint(right);
             ScreenRightContainerPoint = _cam.WorldToScreenPoint(WorldRightContainerPoint);
 
             _p_ZoneRadius = ScreenRightContainerPoint.x - CenterScreenPoint.x;            
 
         }
 
-        /*
-* Публичные методы доступа:
-* SetJoystikParam - для установок параметров движения.
-* SetPosition - установка джостика в новую позицию с передачей тача для реагирования
-* DropState - сбрасываем флаги выбора направления
-*/
-        public void SetJoystikParam(bool CanMoveinArea,Vector2 ScreenPointLeftBottom = new Vector2(), Vector2 pointRightTop = new Vector2())
+        public void SetJoystikParam(bool CanMoveinArea,Vector2 ScreenPointLeftBottom = new Vector2(), Vector2 ScreenPointRightTop = new Vector2())
         {           
-            if (ScreenPointLeftBottom == null)
-            {
-                ScreenPointLeftBottom = new Vector2(-1f,-1f);
-            }
-            if (pointRightTop == null)
-            {
-                pointRightTop = new Vector2(-1f, -1f);
-            }
+            ScreenPointLeftBottom = (ScreenPointLeftBottom == null) ? LifeZone.Empty : ScreenPointLeftBottom;
+            ScreenPointRightTop = (ScreenPointRightTop == null) ? LifeZone.Empty : ScreenPointRightTop;
+
             isStatic = !CanMoveinArea;
-            _lifeZone = new LifeZone(ScreenPointLeftBottom, pointRightTop);
+            _lifeZone = new LifeZone(ScreenPointLeftBottom, ScreenPointRightTop);
             if (_lifeZone.isEmpty())
             {
-                Debuger.layoutThis("EMPTY! lifeZone");
+                throw new System.Exception("Empty touch Zone!");
             }
-            //else
-            //    Debuger.layoutThis( _lifeZone.ToString());
+
         }
 
         public bool SetPosition(Swipe startTouch)
-        {
-            
-                      
-            if ((_lifeZone.Contains(startTouch.screenPoint_start, _p_ZoneRadius) || _lifeZone.isEmpty()) && (ThisTapID == JoystykBaseConst.NO_ID))
+        {                     
+            if ((_lifeZone.Contains(startTouch.screenPoint_start, _p_ZoneRadius) || _lifeZone.isEmpty()) && (TapID == JoystykBaseConst.NO_ID))
             {
                 Power = 0;
                 Vector3 p_new_point;                
-                Transform mainTrans = ParentContainer.transform;
+                Transform mainTrans = _parentContainer.transform;
                 p_new_point = new Vector3(startTouch.screenPoint_start.x, startTouch.screenPoint_start.y, _p_JostikPos_nul.z);
                 mainTrans.position = _cam.ScreenToWorldPoint(p_new_point);
                 //mainTrans.position = new Vector3(mainTrans.position.x, mainTrans.position.y, JoystykBaseConst.ZOrder_zone);
@@ -151,7 +117,7 @@ namespace VOrb.CubesWar
         public void DropState()
         {
             _TapStartTime = 0;
-            ThisTapID = JoystykBaseConst.NO_ID;
+            TapID = JoystykBaseConst.NO_ID;
             SetNewNulPosition(JoystykBaseConst.NO_ID);
             EventPublisher.JoystikUp.Publish(Direction, 0);
             DirectionChoosed = false;            
@@ -162,7 +128,7 @@ namespace VOrb.CubesWar
          */
         private void SwingButtonAlfa(int state)
         {
-            var BZone = JoystikZone.GetComponent<Button>();
+            var BZone = _joystikZone.GetComponent<Button>();
             var bzColors = BZone.colors;
             if (state == JoystykBaseConst.BTN_UP)
                 bzColors.normalColor = new Color(1, 1, 1, _minAlfa);
@@ -194,21 +160,21 @@ namespace VOrb.CubesWar
         private void SetNewNulPosition(int CurrentTapID)
         {
 
-            ThisTapID = CurrentTapID;
+            TapID = CurrentTapID;
            
-            if (ThisTapID == JoystykBaseConst.NO_ID)
+            if (TapID == JoystykBaseConst.NO_ID)
             {
-                ParentContainer.transform.localPosition = _p_StartPosition_LOCAL;
-                gameObject.transform.position = ParentContainer.transform.position;
+                _parentContainer.transform.localPosition = _p_StartPosition_LOCAL;
+                gameObject.transform.position = _parentContainer.transform.position;
             }
 
-            Transform transform = JoystikZone.transform;
+            Transform transform = _joystikZone.transform;
             _p_JostikPos_nul = _cam.WorldToScreenPoint(transform.position);
         }
 
         private bool CheckPositionIsNew()
         {
-            Vector2 CurLocal = ParentContainer.transform.localPosition;            
+            Vector2 CurLocal = _parentContainer.transform.localPosition;            
             if (CurLocal != (Vector2)_p_StartPosition_LOCAL)
             {
                 return true;
@@ -218,16 +184,16 @@ namespace VOrb.CubesWar
 
         void UpdatePosition()
         {
-            if (CheckPositionIsNew()) SetNewNulPosition(ThisTapID);
+            if (CheckPositionIsNew()) SetNewNulPosition(TapID);
             Touch[] AllTouches = Input.touches;
-            if (ThisTapID != JoystykBaseConst.NO_ID)
+            if (TapID != JoystykBaseConst.NO_ID)
             {
                 _thisTapCoord = Input.mousePosition;
                 if (Input.touchCount > 1)
                 {
                     for (int i = 0; i < AllTouches.Length; i++)
                     {
-                        if (AllTouches[i].fingerId == ThisTapID)
+                        if (AllTouches[i].fingerId == TapID)
                         {
                             _thisTapCoord = new Vector2(AllTouches[i].position.x, AllTouches[i].position.y);
                         }
@@ -241,7 +207,7 @@ namespace VOrb.CubesWar
             if (SetPosition(data))
             {
                 DirectionChoosed = false;
-                ThisTapID = data.swipeID;
+                TapID = data.swipeID;
                 _TapStartTime = Time.realtimeSinceStartup;
                 EventPublisher.JoysticFirstTap.Publish(data.screenPoint_start);
                 // SwingButtonAlfa(JoystykBaseConst.BTN_DOWN);
@@ -249,12 +215,12 @@ namespace VOrb.CubesWar
         } 
         public void OnPointerUpEvent(Swipe data)
         {
-            if (ThisTapID !=JoystykBaseConst.NO_ID && ThisTapID==data.swipeID)
+            if (TapID !=JoystykBaseConst.NO_ID && TapID==data.swipeID)
             {
                 //SwingButtonAlfa(JoystykBaseConst.BTN_UP);
                 _TapStartTime = 0;
                 DirectionChoosed = true;
-                ThisTapID = JoystykBaseConst.NO_ID;
+                TapID = JoystykBaseConst.NO_ID;
                 SetNewNulPosition(JoystykBaseConst.NO_ID);
                 if (CheckSelectedDirection())
                 {
@@ -273,7 +239,7 @@ namespace VOrb.CubesWar
         {
             
             UpdatePosition();
-            if (ThisTapID != JoystykBaseConst.NO_ID)
+            if (TapID != JoystykBaseConst.NO_ID)
             {
                 if (!_lifeZone.Contains(data.screenPoint_end))
                 {
@@ -317,7 +283,7 @@ namespace VOrb.CubesWar
                             deltaNewPos.y = overrun * Mathf.Sin(Alfa2);
                             deltaNewPos.z = 0f;
                             Vector3 p_new_point;
-                            Transform mainTrans = ParentContainer.transform;
+                            Transform mainTrans = _parentContainer.transform;
                             p_new_point = _p_JostikPos_nul + deltaNewPos;
                             if (_lifeZone.Contains(new Vector2(p_new_point.x, p_new_point.y)))
                             {

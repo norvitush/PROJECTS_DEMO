@@ -7,39 +7,52 @@ using VOrb;
 public class SceneSettings : MonoBehaviour
 {
     [Header("ИГРОВЫЕ УСТАНОВКИ")]
-    public GameObject TopUIContainer;
-    //кулдаун появления следующего кубика
-    public float coolDown = 1.5f;
+    [SerializeField] private GameObject _topUISensor;
 
-    public GameObject BulletCubePrefab;
-    public Transform parent_forPoolOfCubs;
+    //кулдаун появления следующего подарка
+    [SerializeField] private float _coolDown = 0.5f;
+
+    [SerializeField] private GameObject _giftPrefab;
+    [SerializeField] private Transform _parentForPoolOfGifts;
 
     [Tooltip("Test mode!")]
-    public bool IsTestMode = true;
+    [SerializeField] private bool _isTestMode = false;
 
     [Tooltip("Сброс сохранённых данных")]
-    public bool DropAccountState = false;
+    [SerializeField]  private bool _dropAccountState = false;
 
     [Tooltip("Имя игрока")]
-    public string PlayerName = "";
+    public string PlayerName = "Cesar";
 
-    public GameObject PopupTextPrefab;
-    public Transform parent_forPopupTextPrefab;
+    [SerializeField] private Transform _uiEffectsContainer;
 
-    public GameObject[] NubersPopupTextPrefabs;
-    
-
-    public GameObject[] HomesPrefab;
-    public GameObject[] EnvirPrefab;
-    public GameObject StonePrefab;
-    public Texture2D GrayTexture;
+    [SerializeField] private GameObject[] _popupsSmilesPrefabs;
 
 
-    [Header("поведение кубика")]
-    public Vector3 baseCubeRotation = new Vector3(3.16f, -19.46f, -19.21f);
-    public Vector3 baseCubeScal = new Vector3(1.85f, 1.85f, 1.85f);
-    public Vector3 baseHomeScal = new Vector3(22f, 22f, 22f);
+    [SerializeField] private GameObject[] _homesPrefab;
+    [SerializeField] private GameObject[] _envirPrefab;
+    [SerializeField] private GameObject _stonePrefab;
+    [SerializeField] private Texture2D _grayTexture;
 
-    public int StoneShowLevel = 5;
+
+    [Header("Базовые установки коробки подарка")]
+    [SerializeField] private Vector3 _baseGiftScal = new Vector3(0.8f, 0.8f, 0.8f);
+
+    [SerializeField] private int _brickShowLevel = 5;
+
+    public GameObject TopUISensor  => _topUISensor;
+    public float CoolDown  => _coolDown;
+    public GameObject GiftPrefab => _giftPrefab;
+    public Transform ParentForPoolOfGifts { get => _parentForPoolOfGifts; set => _parentForPoolOfGifts = value; }
+    public bool IsTestMode { get => _isTestMode; set => _isTestMode = value; }
+    public bool DropAccountState  => _dropAccountState;
+    public Transform UIEffectsContainer => _uiEffectsContainer;
+    public GameObject[] PopupsSmilesPrefabs  => _popupsSmilesPrefabs;
+    public GameObject[] HomesPrefab  => _homesPrefab; 
+    public GameObject[] EnvirPrefab => _envirPrefab;
+    public GameObject StonePrefab  => _stonePrefab; 
+    public Texture2D GrayTexture  => _grayTexture;
+    public Vector3 BaseGiftScal  => _baseGiftScal;
+    public int BrickShowLevel  => _brickShowLevel; 
 } 
 

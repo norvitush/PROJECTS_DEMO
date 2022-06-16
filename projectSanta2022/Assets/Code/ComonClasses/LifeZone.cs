@@ -4,16 +4,16 @@ namespace VOrb
 {
     public class LifeZone
     {
-        Rect ZoneRect;       
-        public float Left { get => ZoneRect.xMin; private set => ZoneRect.xMin = value; }
-        public float Top { get => ZoneRect.yMax; private set => ZoneRect.yMax = value; }
-        public float Right { get => ZoneRect.xMax; private set => ZoneRect.xMax = value; }
-        public float Bottom { get => ZoneRect.yMin; private set => ZoneRect.yMin = value; }
+        private Rect _zoneRect;       
+        public float Left { get => _zoneRect.xMin; private set => _zoneRect.xMin = value; }
+        public float Top { get => _zoneRect.yMax; private set => _zoneRect.yMax = value; }
+        public float Right { get => _zoneRect.xMax; private set => _zoneRect.xMax = value; }
+        public float Bottom { get => _zoneRect.yMin; private set => _zoneRect.yMin = value; }
         public static LifeZone Zero()
         {
             return new LifeZone();
         }
-
+        public static Vector2 Empty => new Vector2(-1,-1);
         public LifeZone()
         {
             this.SetLifeZone();
@@ -41,7 +41,7 @@ namespace VOrb
                 return true;
             }
 
-            Rect tempRect = ZoneRect;
+            Rect tempRect = _zoneRect;
             if (Left < 0) tempRect.xMin = point.x - 10;
             if (Right < 0) tempRect.xMax = point.x + 10;
             if (Top < 0) tempRect.yMax = point.y + 10;

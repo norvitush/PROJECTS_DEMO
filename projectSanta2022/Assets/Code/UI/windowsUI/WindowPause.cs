@@ -40,7 +40,7 @@ public class WindowPause : Window
         SvipeEvent.AddListener(() => { });
 
         gameObject.SetActive(true);
-        GameService.ActiveNow = this;
+        GameService.Instance.ActiveNow = this;
         _stageInfo.text = "Stage " + GameService.Instance.Current_level;
         afterInit?.Invoke();
 
@@ -65,21 +65,7 @@ public class WindowPause : Window
 
         if (GameService.Instance.NoAds == 0)
         {
-#if UNITY_EDITOR
-            Debuger.AddToLayout("*IS_else: Interstitial Try SHOW!");
-
-#elif UNITY_ANDROID
-                                Debuger.AddToLayout("*IS: Interstitial Try SHOW!");
-                                if (IronSource.Agent.isInterstitialReady())
-                                {
-                                    Debuger.AddToLayout("*IS: Interstitial Try SHOW!  -   ReadyForShow");
-
-                                    /// показываем межстраничную                    
-
-                                    IronSource.Agent.showInterstitial();
-                                }
-#endif
-
+            //interstitial
         }
 
 
@@ -116,7 +102,7 @@ public class WindowPause : Window
         SoundService.PlaySound(Sound.ButtonClick);
         GameStorageOperator.DropSavedPlayerInfo();
         SceneLoader.UpdateFromStorage();
-        string player = SceneLoader.sceneSettings.PlayerName + SystemInfo.deviceUniqueIdentifier;
+        string player = SceneLoader.SceneSettings.PlayerName + SystemInfo.deviceUniqueIdentifier;
         GameStorageOperator.PutToDevice(GameStorageOperator.PlayerParamNames.Player, player);
         OnGiveUp();
     }
@@ -124,7 +110,7 @@ public class WindowPause : Window
     public void TestModeSwitch()
     {
         SoundService.PlaySound(Sound.ButtonClick);
-        SceneLoader.sceneSettings.IsTestMode = !SceneLoader.sceneSettings.IsTestMode;
-        _check.gameObject.SetActive(SceneLoader.sceneSettings.IsTestMode);
+        SceneLoader.SceneSettings.IsTestMode = !SceneLoader.SceneSettings.IsTestMode;
+        _check.gameObject.SetActive(SceneLoader.SceneSettings.IsTestMode);
     }
 }

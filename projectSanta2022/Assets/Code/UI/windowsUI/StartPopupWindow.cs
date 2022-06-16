@@ -39,7 +39,7 @@ public class StartPopupWindow : Window
         SvipeEvent.AddListener(() => { });
 
         gameObject.SetActive(true);
-        GameService.ActiveNow = this;
+        GameService.Instance.ActiveNow = this;
         afterInit?.Invoke();
        
         SetIcons();
@@ -94,7 +94,7 @@ public class StartPopupWindow : Window
             _iconSpeed.SetActive(true);
             generatedFiches++;
         }
-        if (level.LevelNumber > SceneLoader.sceneSettings.StoneShowLevel)
+        if (level.LevelNumber > SceneLoader.SceneSettings.BrickShowLevel)
         {
             _iconBrick.SetActive(true);
             generatedFiches++;

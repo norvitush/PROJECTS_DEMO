@@ -27,7 +27,7 @@ public class WindowFinal : Window
         SvipeEvent.AddListener(() => { });
 
         gameObject.SetActive(true);
-        GameService.ActiveNow = this;
+        GameService.Instance.ActiveNow = this;
     }
    
     public void SetCamToPoint()
