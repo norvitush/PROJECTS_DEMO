@@ -9,46 +9,23 @@ namespace VOrb.CubesWar
 
     public class DataBaseManager : Singlton<DataBaseManager>
     {
-        public enum ListType { ItemCube = 1  };
 
-        [SerializeField] private List<GiftItem> CubesDataBuffer = new List<GiftItem>();
-        
+   
+        [SerializeField] private List<SafeGiftItem> _giftsData = new List<SafeGiftItem>();
+        [SerializeField] private List<Sprite> _giftsTextures = new List<Sprite>();
+        [SerializeField] private List<Sprite> _homesTextures = new List<Sprite>();
+
         public List<LevelInfo> LevelsInfo = new List<LevelInfo>();
-        
-        private List<SafeGiftItem> _itemCubesData = new List<SafeGiftItem>();
         public List<Sprite> SpritesDataBase = new List<Sprite>();
 
-        [SerializeField] private List<Sprite> _GiftsTextures = new List<Sprite>();
-        [SerializeField] private List<Sprite> _HomesTextures = new List<Sprite>();
-
-
-
-        public List<SafeGiftItem> SelectAllGameCubesWhere(Func<SafeGiftItem,bool> match, ListType baseType = ListType.ItemCube)
-        {
-            switch (baseType)
-            {                  
-                case ListType.ItemCube:
-                    return _itemCubesData.Where(match).ToList();                    
-                default:
-                    break;
-            }
-            return null;
-            
-        }
 
         protected override void Init()
         {
             base.Init();
 
-            GameStorageOperator.LoadJsonFromString("pow33", CubesDataBuffer);
-            foreach (var cb in CubesDataBuffer)
-            {
-                _itemCubesData.Add(cb);
-            }
-            
+            _giftsData = GameStorageOperator.LoadJsonFromString<GiftItem>("pow33").Select(g => (SafeGiftItem)g).ToList();
 
-            List<Level> Levels = new List<Level>();
-            GameStorageOperator.LoadJsonFromString("pow333", Levels);
+            List<Level> Levels =   GameStorageOperator.LoadJsonFromString<Level>("pow333");
             
             foreach (var lvl in Levels)
             {
@@ -88,12 +65,12 @@ namespace VOrb.CubesWar
 
                 if (item.name.Contains("pres_t"))
                 {
-                    _GiftsTextures.Add((Sprite)item);
+                    _giftsTextures.Add((Sprite)item);
                     continue;
                 }
                 if (item.name.Contains("ho_color"))
                 {
-                    _HomesTextures.Add((Sprite)item);
+                    _homesTextures.Add((Sprite)item);
                     continue;
                 }
                 SpritesDataBase.Add((Sprite)item);
@@ -104,14 +81,14 @@ namespace VOrb.CubesWar
         }
         //=================================================================
 
-        public Texture2D GetRandomGiftsTexture() => _GiftsTextures[UnityEngine.Random.Range(0, _GiftsTextures.Count)].texture;
-        public Texture2D GetRandomHousesTexture() => _HomesTextures[UnityEngine.Random.Range(0, _HomesTextures.Count)].texture;
+        public Texture2D GetRandomGiftsTexture() => _giftsTextures[UnityEngine.Random.Range(0, _giftsTextures.Count)].texture;
+        public Texture2D GetRandomHousesTexture() => _homesTextures[UnityEngine.Random.Range(0, _homesTextures.Count)].texture;
 
 
         public static GiftItem GetCubeItemData(string prefname, int id)
         {
             Predicate<SafeGiftItem> equalNameOrId = (cur) => { return (cur.PrefabName == prefname) || (cur.Id == id); };
-            var forret = Instance._itemCubesData.Find(equalNameOrId);
+            var forret = Instance._giftsData.Find(equalNameOrId);
             return forret;
         }
 

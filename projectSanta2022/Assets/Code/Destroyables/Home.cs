@@ -8,14 +8,13 @@ using VOrb.CubesWar;
 
 public class Home : DestroyableAnimatedObject
 { 
-    internal PooledObjectType type { get => _poolType; set=>_poolType = value; }
-    [SerializeField] ParticleSystem _smoke;
-    [SerializeField] GameObject _fence;
-    [SerializeField] ParticleSystem[] _lights;
-    [SerializeField] public GameObject[] _points;
+    [SerializeField] private ParticleSystem _smoke;
+    [SerializeField] private GameObject _fence;
+    [SerializeField] private ParticleSystem[] _lights;
+    [SerializeField] private GameObject[] _points;
 
     public bool InDestroyProcess => _destroying!=null;
-    
+    public PooledObjectType type { get => _poolType; set => _poolType = value; }
 
     public void SetActiveSmoke(bool value) => _smoke?.gameObject.SetActive(value);
     public void SetActiveLight(bool value)
@@ -36,8 +35,7 @@ public class Home : DestroyableAnimatedObject
     }
     public bool isNumberOn => GetComponentInChildren<ChimneySensor>().isNumberOn;
 
- 
-
+    public GameObject[] Points { get => _points; set => _points = value; }
 
     public override void Destroy()
     {

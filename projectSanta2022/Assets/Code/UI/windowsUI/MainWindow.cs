@@ -12,13 +12,13 @@ public class MainWindow : Window
     [SerializeField] private LevelResultWindow _resultsWindow;
 
     [Header("Игровые контейнеры:")]
-    [SerializeField] internal GameObject UIContainer;
-    [SerializeField] internal GameObject VFXContainer;
-    [SerializeField] internal GameObject GameElements;
-    [SerializeField] internal GameObject TutorialContainer;
-    [SerializeField] internal GameObject SantaContainer;
+    [SerializeField] private GameObject _uiPanel;
+    [SerializeField] private GameObject _vfxContainer;
+    [SerializeField] private GameObject _gameElements;
+    [SerializeField] private GameObject _tutorialContainer;
+    [SerializeField] private GameObject _santaContainer;
 
-    
+
     [SerializeField] private GameObject _camPoint1;
     [SerializeField] private GameObject _camPoint2;
     [SerializeField] private TextMeshProUGUI _giftsInfoText;
@@ -30,6 +30,15 @@ public class MainWindow : Window
     [Header("КОНТРОЛЛЕР ЗВЁЗДНОГО ПУТИ")]
     [SerializeField] private PathController _starsPath;
     public PathController StarsPath => _starsPath;
+
+    public GameObject UIPanel  => _uiPanel;
+
+    public GameObject VFXContainer => _vfxContainer;
+
+    public GameObject GameElements => _gameElements;
+
+    internal GameObject TutorialContainer => _tutorialContainer;
+    internal GameObject SantaContainer => _santaContainer;
 
     private int _camPoint=1;
 
@@ -148,7 +157,7 @@ public class MainWindow : Window
         }
     }
 
-    internal void SetGiftsInfo(int giftscount)
+    internal void SetGiftsCountInfo(int giftscount)
     {
         _giftsInfoText.text = giftscount +  "/"+GameService.Instance.CurrentLevel.Giftscount;
     }
@@ -193,8 +202,8 @@ public class MainWindow : Window
     }
     private void ShowMainUI()
     {
-        UIContainer.SetActive(true);
-        var title = UIContainer.GetComponentInChildren<EmptyTitle>().GetComponent<TextMeshProUGUI>();
+        UIPanel.SetActive(true);
+        var title = UIPanel.GetComponentInChildren<EmptyTitle>().GetComponent<TextMeshProUGUI>();
         title.text = "STAGE " + GameService.Instance.Current_level;
 
         if ((bool)(SafeInt)(int)GameStorageOperator.GetFromDevice(GameStorageOperator.PlayerParamNames.Tutorial,0) == false)
@@ -205,7 +214,7 @@ public class MainWindow : Window
             TutorialContainer.SetActive(false);
 
     }
-    private void HideMainUI() => UIContainer.SetActive(false);
+    private void HideMainUI() => UIPanel.SetActive(false);
 
     public void SwitchCam()
     {

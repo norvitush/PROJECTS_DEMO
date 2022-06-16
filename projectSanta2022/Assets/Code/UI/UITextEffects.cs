@@ -33,7 +33,7 @@ namespace VOrb.CubesWar
                 {
                     Vector3 txt_position;
                     var mn = UIWindowsManager.GetWindow<MainWindow>();
-                    RectTransformUtility.ScreenPointToWorldPointInRectangle((RectTransform)mn.UIContainer.transform, preset.ScreenPosition, Camera.main, out txt_position);
+                    RectTransformUtility.ScreenPointToWorldPointInRectangle((RectTransform)mn.UIPanel.transform, preset.ScreenPosition, Camera.main, out txt_position);
                     SplashText.transform.position = txt_position;
                 }
                 if (preset.Scaleble)

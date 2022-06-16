@@ -17,7 +17,7 @@ namespace VOrb.CubesWar
         private SafeGiftItem NextCubeContent { get => DataBaseManager.GetCubeItemData("", 1); }
 
         public List<Vector3> SpawnPoints;
-        public GameObject NewCube { get => _nextGiftReady ? _newGift.GameObject : null; }
+        public GameObject NewGift { get => _nextGiftReady ? _newGift.GameObject : null; }
         public float FALL_LIMIT = 12f;
         public int ThrowCount => _throwCount;
 
@@ -118,13 +118,13 @@ namespace VOrb.CubesWar
                     _waitForLevelEnd = GameService.Instance.StartCoroutine(CoolDown());
                     if (giftObject != null)
                     {
-                        GiftBehaviour BulletGift = giftObject.GetComponent<GiftBehaviour>();
-                        if (BulletGift!=null)
+                        GiftBehaviour ThrowedGift = giftObject.GetComponent<GiftBehaviour>();
+                        if (ThrowedGift!=null)
                         {
-                            BulletGift.State = new ThrowState();
-                            BulletGift.Play(GiftAnimations.Throw);
+                            ThrowedGift.State = new ThrowState();
+                            ThrowedGift.Play(GiftAnimations.Throw);
                             _throwCount++;
-                            UIWindowsManager.GetWindow<MainWindow>().SetGiftsInfo(GameService.Instance.CurrentLevel.Giftscount - _throwCount);
+                            UIWindowsManager.GetWindow<MainWindow>().SetGiftsCountInfo(GameService.Instance.CurrentLevel.Giftscount - _throwCount);
                         }
                         
                     }
@@ -151,23 +151,19 @@ namespace VOrb.CubesWar
 
         public void SpawnGift()
         {
-            _newGift = GetGift();
+            _newGift = GetThrowObject();
             if (_newGift.GameObject != null)
             {
-                //_newCube.GameObject.transform.position = GameService.Instance.GunController.GunSpawnPoint.transform.position;
-
                 _newGift.GameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 _newGift.GameObject.SetActive(true);                                              
                 GiftBehaviour cubeControl = _newGift.GameObject.GetComponent<GiftBehaviour>();
                 GameService.Instance.SantaController.Santa.HookTheGift(_newGift);
                 cubeControl?.Play(GiftAnimations.NewOne);
-                
             }
             _nextGiftReady = _newGift.GameObject != null;
         }
        
-
-        private PooledObject GetGift(IGiftState state  = null)
+        private PooledObject GetThrowObject(IGiftState state  = null)
         {
             if (state==null)
             {
@@ -177,8 +173,7 @@ namespace VOrb.CubesWar
             PooledObject gift;
             if (GameService.Instance.CurrentLevel.LevelNumber > SceneLoader.SceneSettings.BrickShowLevel && stoneCheck ==null && ThrowCount>1 )
             {
-                int _coinDrop = UnityEngine.Random.Range(0, 10);
-                if (_coinDrop<2)
+                if (UnityEngine.Random.Range(0, 10) < 2)
                 {
                     gift = ObjectPoolManager.Instance.GetPooledObject(PooledObjectType.Brick);
                 }
@@ -210,7 +205,6 @@ namespace VOrb.CubesWar
 
         public void DeactivateFalled()
         {
-            Debuger.layoutThis("DeactivateFalled");
             var allActive = ObjectPoolManager.GetActivePool(PooledObjectType.Gift);
             foreach (var gift in allActive)
             {

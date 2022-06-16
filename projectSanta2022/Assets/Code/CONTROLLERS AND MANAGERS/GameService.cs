@@ -34,7 +34,7 @@ namespace VOrb.CubesWar
 
         private static GiftsDriver _giftsController;
         private static VFX_Manager _vFXDriver;
-        private SantaDriver _santaController;
+        private ThrowDriver _santaController;
         private Joystik _gameJoystik;
         private bool _gameStarted;
 
@@ -76,7 +76,7 @@ namespace VOrb.CubesWar
         public static GiftsDriver GiftsController { get => _giftsController; private set => _giftsController = value; }
         public static VFX_Manager VFXDriver { get => _vFXDriver; private set => _vFXDriver = value; }
         public Joystik GameJoystik { get => _gameJoystik; private set => _gameJoystik = value; }
-        public SantaDriver SantaController { get => _santaController; private set => _santaController = value; }
+        public ThrowDriver SantaController { get => _santaController; private set => _santaController = value; }
 
         protected override void Init()
         {
@@ -108,7 +108,7 @@ namespace VOrb.CubesWar
                 VFXDriver.StartSnow();
 
                 mn.SetProgressSlider(0.1f);
-                mn.SetGiftsInfo(level.Giftscount);
+                mn.SetGiftsCountInfo(level.Giftscount);
                 mn.SetSmilesInfo(0);
                 mn.SetTargetsInfo(0);
 
@@ -214,7 +214,7 @@ namespace VOrb.CubesWar
             JoystikContainer JoystikParent = SceneLoader.SceneSettings.TopUISensor.GetComponentInChildren<JoystikContainer>();
             GameJoystik = JoystikParent.gameObject.transform.GetComponentInChildren<Joystik>();
             GameJoystik?.Init();
-            SantaController = SantaContainer.GetComponentInChildren<SantaDriver>();
+            SantaController = SantaContainer.GetComponentInChildren<ThrowDriver>();
             GiftsController = new GiftsDriver();
         }
 

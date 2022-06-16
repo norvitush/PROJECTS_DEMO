@@ -32,9 +32,8 @@ public class SantaController : MonoBehaviour
             _gift.transform.localScale = new Vector3(BASE_SCALE_X, BASE_SCALE_Y, BASE_SCALE_Z);
         }
 
-
     }
-    public void ReturnForThrow(Transform parent)
+    public void ReleaseForThrow(Transform parent)
     {
         _gift.transform.SetParent(parent);
         _gift.transform.localScale = _storedScale;

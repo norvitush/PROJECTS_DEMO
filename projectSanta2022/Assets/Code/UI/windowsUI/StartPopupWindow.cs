@@ -56,7 +56,7 @@ public class StartPopupWindow : Window
         
         giftText.text = "x "+ level.Giftscount +" gifts";
 
-        var targetsInfo = UIWindowsManager.GetWindow<MainWindow>().UIContainer.GetComponentInChildren<TargetsHomeInfo>(true);
+        var targetsInfo = UIWindowsManager.GetWindow<MainWindow>().UIPanel.GetComponentInChildren<TargetsHomeInfo>(true);
         targetsInfo.gameObject.SetActive(false);
         targetsInfo.Cleare();
         foreach (var fich in level.GetFiches())

@@ -6,31 +6,22 @@ using VOrb.CubesWar;
 
 public class DestroyableAnimatedObject : MonoBehaviour, IDestoyableItem
 {
-    [SerializeField] Animator _selfAnimator;
-    [SerializeField] float speed;
+    [SerializeField] private Animator _selfAnimator;
+    [SerializeField] private float _speed = 3f;
     [SerializeField] protected  PooledObjectType _poolType;
 
     protected Coroutine _destroying = null;
-    public bool destroyed { get; private set; }
+    public bool Destroyed { get; private set; }
 
     private void OnEnable()
     {
         _destroying = null;
-        destroyed = false;
-    }
-    private void Start()
-    {
-        //if (_selfAnimator!=null)
-        //{
-        //    _selfAnimator.speed = 0f;
-        //}
-        
+        Destroyed = false;
     }
     public virtual void Destroy()
     {
         if (_selfAnimator != null)
         {
-            //_selfAnimator.speed = 1;
             _selfAnimator.Play("delete");
         }
         else
@@ -51,12 +42,11 @@ public class DestroyableAnimatedObject : MonoBehaviour, IDestoyableItem
         transform.localScale = transform.localScale * 0.98f;
         while (gameObject.activeInHierarchy && transform.localScale.y > 0f)
         {
-            transform.localScale = transform.localScale - (new Vector3(0, speed * Time.deltaTime, 0));
+            transform.localScale = transform.localScale - (new Vector3(0, _speed * Time.deltaTime, 0));
             yield return null;
         }
         _destroying = null;
-        destroyed = true;
-        //transform.localScale = transform.localScale.SetYTo(transform.localScale.x);
+        Destroyed = true;
         TurnOff();
     }
 

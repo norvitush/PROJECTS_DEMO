@@ -6,8 +6,6 @@ using UnityEngine;
 namespace VOrb.CubesWar
 {
 
-
-    
     public static class GameStorageOperator
     {
         public struct PlayerParamNames
@@ -66,16 +64,8 @@ namespace VOrb.CubesWar
             return tmp;
         }
 
-        public static void GenerateAndSave(string name)
+        public static List<TDat> LoadJsonFromString<TDat>(string file)
         {
-            TextAsset mytxtData = (TextAsset)Resources.Load(name);
-            string txt = mytxtData.text;
-            DataKeeper.SaveCryptedTo(@"C:\!MyTestPrograms\" + name + ".json", txt);
-        }
-
-        public static IEnumerable<TDat> LoadJsonFromString<TDat>(string file, List<TDat> output)
-        {
-            output.Clear();
             TextAsset mytxtData = (TextAsset)Resources.Load(file);
             if (mytxtData == null)
             {
@@ -83,12 +73,8 @@ namespace VOrb.CubesWar
             }
             string txt = mytxtData.text;
 
-            IEnumerable<TDat> forret = JsonConvert.DeserializeObject<TDat[]>(txt);
-            foreach (var item in forret)
-            {
-                output.Add(item);
-            }
-            return forret;
+            IEnumerable<TDat> forret = JsonConvert.DeserializeObject<TDat[]>(txt);            
+            return new List<TDat>(forret);
         }
     }
 }

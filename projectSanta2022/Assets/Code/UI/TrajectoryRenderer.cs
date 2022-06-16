@@ -66,23 +66,21 @@ namespace VOrb.CubesWar
         }
         private void DrawTrajectory(Vector3 force, Rigidbody rig)
         {
-            
             _currentState = force;
-
-            var res = rig.CalculateMovement(stepCount, timeBeteenStep, Vector3.zero, force);
+            var points = rig.CalculateMovement(stepCount, timeBeteenStep, Vector3.zero, force);
             _lineRenderer.positionCount = stepCount + 1;
             _lineRenderer.SetPosition(0, rig.transform.position);
-            _targetPoint = res.Length - 1;
-            _collisionPoint = res[_targetPoint];
+            _targetPoint = points.Length - 1;
+            _collisionPoint = points[_targetPoint];
             bool finded = false;
-            for (int i = 0; i < res.Length; ++i)
+            for (int i = 0; i < points.Length; ++i)
             {
-                _lineRenderer.SetPosition(i + 1, res[i]);
-                if (!finded && i < res.Length - 1)
+                _lineRenderer.SetPosition(i + 1, points[i]);
+                if (!finded && i < points.Length - 1)
                 {
                     RaycastHit hit;
-                    Ray ray = new Ray(res[i], (res[i + 1] - res[i]).normalized);
-                    if (Physics.Raycast(ray, out hit, Vector3.Distance(res[i + 1], res[i])))
+                    Ray ray = new Ray(points[i], (points[i + 1] - points[i]).normalized);
+                    if (Physics.Raycast(ray, out hit, Vector3.Distance(points[i + 1], points[i])))
                     {
                         _collisionPoint = hit.point;
                         _targetPoint = i;
@@ -95,7 +93,7 @@ namespace VOrb.CubesWar
             _TargetObject.transform.position = _collisionPoint;
             _lineRenderer.positionCount = _targetPoint + 3;
 
-            float iy = GameService.Instance.SantaController.Floor.transform.position.y;
+            float iy = GameService.Instance.SantaController.Ground.transform.position.y;
             if (_TargetObject.transform.position.y < iy)
             {
                 _TargetObject.transform.position = _TargetObject.transform.position.SetYTo(iy + 0.2f);

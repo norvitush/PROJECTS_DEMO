@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 54429870}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -17553,17 +17553,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _volumeIncreaseSpeed: 0.05
-  ButtonClick: {fileID: 768404878}
-  SantaThrow: {fileID: 860818376}
-  ChimneySuccsess: {fileID: 2116008074}
-  ChimneyFailed: {fileID: 828331621}
-  StoneBang: {fileID: 829089525}
-  StarShow: {fileID: 822051208}
-  StarsWindowShow: {fileID: 1089213305}
-  Congratulation: {fileID: 29324489}
-  Coin: {fileID: 1280385410}
-  Music: {fileID: 1033652229}
-  PauseBackgroundMusic: {fileID: 201381005}
+  _buttonClick: {fileID: 768404878}
+  _santaThrow: {fileID: 860818376}
+  _chimneySuccsess: {fileID: 2116008074}
+  _chimneyFailed: {fileID: 828331621}
+  _stoneBang: {fileID: 829089525}
+  _starShow: {fileID: 822051208}
+  _starsWindowShow: {fileID: 1089213305}
+  _congratulation: {fileID: 29324489}
+  _coin: {fileID: 1280385410}
+  _music: {fileID: 1033652229}
+  _pauseBackgroundMusic: {fileID: 201381005}
 --- !u!4 &874008091
 Transform:
   m_ObjectHideFlags: 0
@@ -31103,11 +31103,11 @@ MonoBehaviour:
   _start_window: {fileID: 0}
   _startInfoWindow: {fileID: 0}
   _resultsWindow: {fileID: 0}
-  UIContainer: {fileID: 2035360773}
-  VFXContainer: {fileID: 1634118292}
-  GameElements: {fileID: 1171431548}
-  TutorialContainer: {fileID: 6996484445676884275}
-  SantaContainer: {fileID: 625230006}
+  _uiPanel: {fileID: 2035360773}
+  _vfxContainer: {fileID: 1634118292}
+  _gameElements: {fileID: 1171431548}
+  _tutorialContainer: {fileID: 6996484445676884275}
+  _santaContainer: {fileID: 625230006}
   _camPoint1: {fileID: 748241259}
   _camPoint2: {fileID: 402315724}
   _giftsInfoText: {fileID: 409699603777899348}
@@ -67957,6 +67957,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1842128125}
     - target: {fileID: 514657368507734774, guid: 40c629b4fde510441a135fe9c0d2c744, type: 3}
+      propertyPath: _ground
+      value: 
+      objectReference: {fileID: 1842128125}
+    - target: {fileID: 514657368507734774, guid: 40c629b4fde510441a135fe9c0d2c744, type: 3}
       propertyPath: _spawnPoint
       value: 
       objectReference: {fileID: 2076317320}
@@ -103364,7 +103368,8 @@ PrefabInstance:
       propertyPath: _fadeScreen
       value: 
       objectReference: {fileID: 1535496365}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5417586913094542585, guid: 2cabebe410505604795f06812132f18e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2cabebe410505604795f06812132f18e, type: 3}
 --- !u!1001 &5495718387071261637
 PrefabInstance:

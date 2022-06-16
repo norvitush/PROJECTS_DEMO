@@ -25,17 +25,29 @@ namespace VOrb.CubesWar
     {
         [SerializeField]
         private float _volumeIncreaseSpeed;
-        public AudioSource ButtonClick;
-        public AudioSource SantaThrow;
-        public AudioSource ChimneySuccsess;
-        public AudioSource ChimneyFailed;
-        public AudioSource StoneBang;
-        public AudioSource StarShow;
-        public AudioSource StarsWindowShow;
-        public AudioSource Congratulation;
-        public AudioSource Coin;
-        public AudioSource Music;
-        public AudioSource PauseBackgroundMusic;
+        [SerializeField] private AudioSource _buttonClick;
+        [SerializeField] private AudioSource _santaThrow;
+        [SerializeField] private AudioSource _chimneySuccsess;
+        [SerializeField] private AudioSource _chimneyFailed;
+        [SerializeField] private AudioSource _stoneBang;
+        [SerializeField] private AudioSource _starShow;
+        [SerializeField] private AudioSource _starsWindowShow;
+        [SerializeField] private AudioSource _congratulation;
+        [SerializeField] private AudioSource _coin;
+        [SerializeField] private AudioSource _music;
+        [SerializeField] private AudioSource _pauseBackgroundMusic;
+
+        public AudioSource ButtonClick => _buttonClick;
+        public AudioSource SantaThrow => _santaThrow; 
+        public AudioSource ChimneySuccsess => _chimneySuccsess;
+        public AudioSource ChimneyFailed => _chimneyFailed;
+        public AudioSource StoneBang => _stoneBang;
+        public AudioSource StarShow => _starShow;
+        public AudioSource StarsWindowShow => _starsWindowShow;
+        public AudioSource Congratulation => _congratulation;
+        public AudioSource Coin => _coin;
+        public AudioSource Music => _music;
+        public AudioSource PauseBackgroundMusic => _pauseBackgroundMusic;
 
         public static void AttestMusic()
         {
@@ -53,7 +65,6 @@ namespace VOrb.CubesWar
             }
             else 
             {
-                
                 Instance.StopAllCoroutines();
                 Instance.Music.Stop();
             }
@@ -148,10 +159,6 @@ namespace VOrb.CubesWar
                     default:
                         break;
                 }
-
-               
-                
-
             }
 
         }

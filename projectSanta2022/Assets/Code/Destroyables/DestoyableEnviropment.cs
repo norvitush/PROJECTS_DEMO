@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using VOrb.CubesWar;
 
-public class DestoyableForSmile : DestroyableAnimatedObject
+public class DestoyableEnviropment : DestroyableAnimatedObject
 {
     public override void Destroy()
     {

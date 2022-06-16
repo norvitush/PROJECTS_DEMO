@@ -29,8 +29,6 @@ namespace VOrb.CubesWar
         }
         public SafeInt Id;
 
-        public SafeGiftItem() { }
-
         public SafeGiftItem(string name, string prefabName, SafeInt id)
         {
             

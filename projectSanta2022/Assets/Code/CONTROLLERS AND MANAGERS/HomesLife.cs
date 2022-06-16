@@ -84,7 +84,7 @@ namespace VOrb.CubesWar
             
             if (home != null)
             {
-                foreach (var point in home._points)
+                foreach (var point in home.Points)
                 {
                     if (point.transform.childCount>0)
                     {
@@ -133,7 +133,7 @@ namespace VOrb.CubesWar
                         if (homeCntrl!= null
                             &&movable.GameObject.transform.position.z <= _initStartZ + _roadBeginOffset)
                         {
-                            if (!homeCntrl.destroyed)
+                            if (!homeCntrl.Destroyed)
                             {
                                 movable.GameObject.SetActive(true);
                                 
@@ -240,7 +240,7 @@ namespace VOrb.CubesWar
                 {
                     
                     Envir = ObjectPoolManager.Instance.GetPooledObject((PooledObjectType)randFiches, 
-                                                homeData._points[randPoint].transform);   // сделал тебе перегрузку метода сразу чтоб устанавливать родителя
+                                                homeData.Points[randPoint].transform);   // сделал тебе перегрузку метода сразу чтоб устанавливать родителя
 
                                      
                     Envir.GameObject.transform.localPosition = Vector3.zero; // если у префаба были какие-то позиции, то они станут локальным сдвигом
