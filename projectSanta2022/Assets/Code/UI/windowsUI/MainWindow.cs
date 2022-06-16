@@ -7,17 +7,16 @@ using UnityEngine.UI;
 public class MainWindow : Window
 {
     [Header("Дочерние окна:")]
-    [SerializeField] private StartWindow start_window;
+    [SerializeField] private StartWindow _start_window;
     [SerializeField] private StartPopupWindow _startInfoWindow;
     [SerializeField] private LevelResultWindow _resultsWindow;
 
     [Header("Игровые контейнеры:")]
     [SerializeField] internal GameObject UIContainer;
     [SerializeField] internal GameObject VFXContainer;
-    [SerializeField] internal GameObject FonContainer;
     [SerializeField] internal GameObject GameElements;
     [SerializeField] internal GameObject TutorialContainer;
-    [SerializeField] internal GameObject GunContainer;
+    [SerializeField] internal GameObject SantaContainer;
 
     
     [SerializeField] private GameObject _camPoint1;
@@ -49,7 +48,7 @@ public class MainWindow : Window
 
     protected override void SelfOpen()      //эффекты открытия и другая красота - здесь
     {                                       //opening effects and other beauty-here
-        start_window = UIWindowsManager.GetWindow<StartWindow>();
+        _start_window = UIWindowsManager.GetWindow<StartWindow>();
         _startInfoWindow = UIWindowsManager.GetWindow<StartPopupWindow>();
         _resultsWindow = UIWindowsManager.GetWindow<LevelResultWindow>();
         _starsPath = GetComponent<PathController>();
@@ -119,8 +118,8 @@ public class MainWindow : Window
     public void OpenStartWindow()
     {
         HideMainUI();
-        GameService.Instance.ActiveNow = start_window;
-        start_window?.Open(ChangeCurrentWindow);  //opening the settings window  
+        GameService.Instance.ActiveNow = _start_window;
+        _start_window?.Open(ChangeCurrentWindow);  //opening the settings window  
         
     }
     public void OpenRestartWindow()
@@ -151,7 +150,7 @@ public class MainWindow : Window
 
     internal void SetGiftsInfo(int giftscount)
     {
-        _giftsInfoText.text = giftscount +  "/"+GameService.Instance.currentLevel.Giftscount;
+        _giftsInfoText.text = giftscount +  "/"+GameService.Instance.CurrentLevel.Giftscount;
     }
     internal void SetSmilesInfo(int count)
     {

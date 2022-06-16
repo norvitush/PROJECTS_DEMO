@@ -95,7 +95,7 @@ namespace VOrb.CubesWar
             _TargetObject.transform.position = _collisionPoint;
             _lineRenderer.positionCount = _targetPoint + 3;
 
-            float iy = GameService.Instance.GunController.Floor.transform.position.y;
+            float iy = GameService.Instance.SantaController.Floor.transform.position.y;
             if (_TargetObject.transform.position.y < iy)
             {
                 _TargetObject.transform.position = _TargetObject.transform.position.SetYTo(iy + 0.2f);

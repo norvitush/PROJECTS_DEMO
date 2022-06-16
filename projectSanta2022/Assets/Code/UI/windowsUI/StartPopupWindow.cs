@@ -51,7 +51,7 @@ public class StartPopupWindow : Window
         RectTransform popup = transform.Find("Popup") as RectTransform;
         
         
-        var level = GameService.Instance.currentLevel;
+        var level = GameService.Instance.CurrentLevel;
         var giftText = _iconGift.transform.Find("count").GetComponent<TextMeshProUGUI>();
         
         giftText.text = "x "+ level.Giftscount +" gifts";

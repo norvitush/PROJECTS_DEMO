@@ -66,7 +66,7 @@ public class LevelResultWindow : Window
     {
         yield return null;
       
-        _smilesRewardText.text = (GameService.Instance.ScoreGiftsCount * GameService.Instance.multiplyX).ToString();
+        _smilesRewardText.text = (GameService.Instance.SmilesScore * GameService.Instance.ScoreMultiply).ToString();
         _particleStars[0]?.SetActive(true);
         for (int i = 1; i < count+1; i++)
         {

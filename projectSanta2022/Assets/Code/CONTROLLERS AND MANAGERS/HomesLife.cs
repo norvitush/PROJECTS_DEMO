@@ -10,6 +10,12 @@ namespace VOrb.CubesWar
 
     public class HomesLife : MonoBehaviour
     {
+        private GameObject _lastHome;
+        private float _lenght;
+        private Coroutine _mover = null;
+        private List<PooledObject> _movableObjects = new List<PooledObject>();
+        private List<PooledObject> _enviropment = new List<PooledObject>();
+
         [Header("-- Ѕазовые настройки --")]
         [SerializeField] private float _initStartZ = 25f;
         [SerializeField] private float _leftXBound = -3.38f;
@@ -24,38 +30,28 @@ namespace VOrb.CubesWar
         //рассто€ние между домами
         [SerializeField] private float spaceBtwHZ = 3f;
         [SerializeField] private float basespeed = 2f;
-        private List<PooledObject> _movableObjects = new List<PooledObject>();
-        private List<PooledObject> _enviropment = new List<PooledObject>();
+        
+        [Header("--ќнлайн info --")]
+        [SerializeField] private float startX = -2.803698f;
+        [SerializeField] private float startY = -12.85f;
+        [SerializeField] private float currentZ = 65f;
 
         public void PushToMoveList(PooledObject forAdd) => _movableObjects.Add(forAdd);
-
-
-
-        [Header("--ќнлайн info --")]
-        //позици€ с которой стартуем
-        public float startX = -2.803698f;
-        public float startY = -12.85f;
-        public float currentZ = 65f;
-
-        //скорость (будем брать из настроек текущего уровн€)
-        private GameObject _lastHome;
-        private float _lenght;
-        private Coroutine mover = null;
 
 
         private void OnEnable()
         {
             currentZ = _initStartZ;
 
-            mover = StartCoroutine(HomeMover());
+            _mover = StartCoroutine(HomeMover());
 
         }
         private void OnDisable()
         {
-            if (mover!=null)
+            if (_mover!=null)
             {
-                StopCoroutine(mover);
-                mover = null;
+                StopCoroutine(_mover);
+                _mover = null;
             }
             _lastHome = null;
             _lenght = 0;
@@ -107,10 +103,10 @@ namespace VOrb.CubesWar
         {
             yield return null;
             _movableObjects.Clear();
-            bool isLevelNumered = GameService.Instance.currentLevel.Contains<NumberedHouseChimney>();
+            bool isLevelNumered = GameService.Instance.CurrentLevel.Contains<NumberedHouseChimney>();
             SpawnHomes();
 
-            float GunZ = GameService.Instance.GunContainer.transform.position.z;
+            float santaZ = GameService.Instance.SantaContainer.transform.position.z;
             float pathProgress = 0;
             //пул окружени€
             
@@ -121,7 +117,7 @@ namespace VOrb.CubesWar
 
                 var MoveList = _movableObjects.Where(o => o.GameObject != null).ToList(); 
 
-                if (_lastHome.transform.position.z <= GunZ || pathProgress>=0.99f || MoveList.Count == 0)
+                if (_lastHome.transform.position.z <= santaZ || pathProgress>=0.99f || MoveList.Count == 0)
                 {
                     Debug.Log("доехал до конца pathProgress=" + pathProgress);
                     //доехал до конца
@@ -156,7 +152,7 @@ namespace VOrb.CubesWar
                     }
                     // if (movable.GameObject.activeInHierarchy)
                     // {
-                    if (movable.GameObject.transform.position.z <= GunZ+7f && homeCntrl!=null)
+                    if (movable.GameObject.transform.position.z <= santaZ+7f && homeCntrl!=null)
                     {
                         if (movable.GameObject.activeInHierarchy)  //чтоб не вырос разрушенный домик +)
                         {
@@ -171,9 +167,9 @@ namespace VOrb.CubesWar
                         
                     }
                         
-                        if (movable.GameObject.transform.position.z >= GunZ)
+                        if (movable.GameObject.transform.position.z >= santaZ)
                         {
-                            movable.GameObject.transform.position -= new Vector3(0, 0, 1) * basespeed * GameService.Instance.currentLevel.Speed * Time.deltaTime;
+                            movable.GameObject.transform.position -= new Vector3(0, 0, 1) * basespeed * GameService.Instance.CurrentLevel.Speed * Time.deltaTime;
                         }
                         else
                         {
@@ -191,20 +187,20 @@ namespace VOrb.CubesWar
                 }
 
                 pathProgress = 1f -
-                    Mathf.InverseLerp(GunZ + _roadBeginOffset / 3, GunZ + _roadBeginOffset + _lenght,
-                    Mathf.Clamp(_lastHome.transform.position.z, GunZ + _roadBeginOffset / 3,
-                    GunZ + _roadBeginOffset + _lenght));
+                    Mathf.InverseLerp(santaZ + _roadBeginOffset / 3, santaZ + _roadBeginOffset + _lenght,
+                    Mathf.Clamp(_lastHome.transform.position.z, santaZ + _roadBeginOffset / 3,
+                    santaZ + _roadBeginOffset + _lenght));
                 UIWindowsManager.GetWindow<MainWindow>().SetProgressSlider(pathProgress);
             }
          
-            mover = null;
+            _mover = null;
 
         }
 
         private void SpawnHomes()
         {
             
-            int wrongHomes = Mathf.CeilToInt(GameService.Instance.currentLevel.Giftscount*_GiftsMultiply *0.5f);
+            int wrongHomes = Mathf.CeilToInt(GameService.Instance.CurrentLevel.Giftscount*_GiftsMultiply *0.5f);
             Texture2D texture = DataBaseManager.Instance.GetRandomHousesTexture();
             float firstHomeZ = 0;
             int minTypeNum = (int)PooledObjectType.Homes1;
@@ -217,8 +213,8 @@ namespace VOrb.CubesWar
 
             int wrongRow = 0;
 
-            int multiply = GameService.Instance.currentLevel.Speed > 2f ? _GiftsMultiply: _GiftsMultiply+1;
-            for (int i = 0; i < GameService.Instance.currentLevel.Giftscount * multiply; i++)
+            int multiply = GameService.Instance.CurrentLevel.Speed > 2f ? _GiftsMultiply: _GiftsMultiply+1;
+            for (int i = 0; i < GameService.Instance.CurrentLevel.Giftscount * multiply; i++)
             {
                 prevX = startX;
                 prevHomeSX = homeSX;
@@ -269,7 +265,7 @@ namespace VOrb.CubesWar
 
                 //только одну фичу!
 
-                var allFiches = GameService.Instance.currentLevel.GetFiches();
+                var allFiches = GameService.Instance.CurrentLevel.GetFiches();
                 if (allFiches.Count > 0)
                 {
                     if (UnityEngine.Random.value > (0.5f + 0.2f*wrongRow) && wrongSetup < wrongHomes)
@@ -293,7 +289,7 @@ namespace VOrb.CubesWar
 
                         if (fich is NumberedHouseChimney)
                         {
-                            var nums = GameService.Instance.currentLevel.GetHousesNumber();
+                            var nums = GameService.Instance.CurrentLevel.GetHousesNumber();
                             int maxCorrectValue = nums.Max();
                             HomeChildren.HouseNumber = UnityEngine.Random.Range(maxCorrectValue + 1, maxCorrectValue + 11);
                             HomeChildren.StatesData.Add(ChimneyState.Numered);
@@ -306,7 +302,7 @@ namespace VOrb.CubesWar
                     {
                         //ne ficha
                         wrongRow = 0;
-                        LevelInfo level = GameService.Instance.currentLevel;
+                        LevelInfo level = GameService.Instance.CurrentLevel;
                         if (level.Contains<NumberedHouseChimney>())
                         {
                             HomeChildren.StatesData.Add(ChimneyState.Numered);

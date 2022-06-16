@@ -69,7 +69,7 @@ public class WindowPause : Window
         }
 
 
-        int level = GameService.Instance.currentLevel.LevelNumber;
+        int level = GameService.Instance.CurrentLevel.LevelNumber;
         GameService.Instance.StopGame( WithoutCalc: true);
         UIWindowsManager.GetWindow<StartWindow>().BtnStartClick(level);
     }

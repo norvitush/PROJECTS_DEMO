@@ -124,7 +124,7 @@ namespace VOrb.CubesWar
                             BulletGift.State = new ThrowState();
                             BulletGift.Play(GiftAnimations.Throw);
                             _throwCount++;
-                            UIWindowsManager.GetWindow<MainWindow>().SetGiftsInfo(GameService.Instance.currentLevel.Giftscount - _throwCount);
+                            UIWindowsManager.GetWindow<MainWindow>().SetGiftsInfo(GameService.Instance.CurrentLevel.Giftscount - _throwCount);
                         }
                         
                     }
@@ -136,7 +136,7 @@ namespace VOrb.CubesWar
         IEnumerator CoolDown()
         {
             yield return new WaitForSeconds(SceneLoader.SceneSettings.CoolDown);
-            if (_throwCount<GameService.Instance.currentLevel.Giftscount)
+            if (_throwCount<GameService.Instance.CurrentLevel.Giftscount)
             {
                SpawnGift(); 
             }
@@ -159,7 +159,7 @@ namespace VOrb.CubesWar
                 _newGift.GameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 _newGift.GameObject.SetActive(true);                                              
                 GiftBehaviour cubeControl = _newGift.GameObject.GetComponent<GiftBehaviour>();
-                GameService.Instance.GunController.Santa.HookTheGift(_newGift);
+                GameService.Instance.SantaController.Santa.HookTheGift(_newGift);
                 cubeControl?.Play(GiftAnimations.NewOne);
                 
             }
@@ -175,7 +175,7 @@ namespace VOrb.CubesWar
             }
             var stoneCheck = _newGift.GameObject?.GetComponent<StoneBehaviour>();
             PooledObject gift;
-            if (GameService.Instance.currentLevel.LevelNumber > SceneLoader.SceneSettings.BrickShowLevel && stoneCheck ==null && ThrowCount>1 )
+            if (GameService.Instance.CurrentLevel.LevelNumber > SceneLoader.SceneSettings.BrickShowLevel && stoneCheck ==null && ThrowCount>1 )
             {
                 int _coinDrop = UnityEngine.Random.Range(0, 10);
                 if (_coinDrop<2)
@@ -214,9 +214,9 @@ namespace VOrb.CubesWar
             var allActive = ObjectPoolManager.GetActivePool(PooledObjectType.Gift);
             foreach (var gift in allActive)
             {
-                if (gift.transform.position.y < (GameService.Instance.GunController.gameObject.transform.position.y - FALL_LIMIT))
+                if (gift.transform.position.y < (GameService.Instance.SantaController.gameObject.transform.position.y - FALL_LIMIT))
                 {                    
-                    gift.transform.position = GameService.Instance.GunController.SpawnPoint.transform.position;
+                    gift.transform.position = GameService.Instance.SantaController.SpawnPoint.transform.position;
                     gift.transform.rotation = Quaternion.identity;
                     gift.GetComponent<Rigidbody>().velocity = Vector3.zero;
                     gift.ReleaseToPool(PooledObjectType.Gift);

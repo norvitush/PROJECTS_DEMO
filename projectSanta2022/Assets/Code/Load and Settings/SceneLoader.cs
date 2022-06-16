@@ -101,7 +101,6 @@ public class SceneLoader : Singlton<SceneLoader>
    
 
         GameObject TimerManager = new GameObject("GLOB_GameTimer", typeof(TimersManager));
-        GameService.Instance.timeManager = TimerManager.GetComponent<TimersManager>();
         TimersManager.SetTimer(TimerManager, 1f, uint.MaxValue, GameService.Instance.OnTimerTick);
         GameService.Instance.SetActiveLvlTimer(false);
 

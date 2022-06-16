@@ -66,13 +66,13 @@ namespace VOrb.CubesWar
         }
         public void ReArm()
         {            
-            GameService.CubsDriver.SpawnGift();
+            GameService.GiftsController.SpawnGift();
         }
         
         public void TrajectoryShow(Vector3 direction, float power)
         {
             
-            if (power == 0 || GameService.CubsDriver.NewCube == null)
+            if (power == 0 || GameService.GiftsController.NewCube == null)
             {
                 _trajectoryRenderer.DropState();
                 _trajectoryInScreen = false;
@@ -81,7 +81,7 @@ namespace VOrb.CubesWar
             }
             if (_bullet == null)
             {
-                _bullet = GameService.CubsDriver.NewCube.GetComponent<Rigidbody>();
+                _bullet = GameService.GiftsController.NewCube.GetComponent<Rigidbody>();
             }
 
             CalculateThrow(direction, power);
@@ -123,7 +123,7 @@ namespace VOrb.CubesWar
 
 
 
-            if (GameService.CubsDriver.NewCube!=null)
+            if (GameService.GiftsController.NewCube!=null)
             {
 
                 if (power == 0)
@@ -134,7 +134,7 @@ namespace VOrb.CubesWar
                     return;
                 }
 
-                GameObject CubeBullet = GameService.CubsDriver.NewCube;
+                GameObject CubeBullet = GameService.GiftsController.NewCube;
                 if (CubeBullet != null)
                 {
                     _santa.ReturnForThrow(GameService.Instance.GameElements.transform);

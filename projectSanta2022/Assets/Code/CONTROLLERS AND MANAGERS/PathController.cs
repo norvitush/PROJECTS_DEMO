@@ -6,29 +6,29 @@ using VOrb.CubesWar;
 
 public class PathController : MonoBehaviour
 {
-    [SerializeField] private GameObject levelContainer;
+    [SerializeField] private GameObject _levelContainer;
     [SerializeField] private List<StageView> _levels;
     [SerializeField] private List<level_line> _targets;
 
-    private List<StageView> GetLevelInfo()
+    private void UpdatePathInfo()
     {
-        _targets = levelContainer.GetComponentsInChildren<level_line>(true).ToList();
-        return levelContainer.GetComponentsInChildren<StageView>(true).ToList();
+        _targets = _levelContainer.GetComponentsInChildren<level_line>(true).ToList();
+        _levels = _levelContainer.GetComponentsInChildren<StageView>(true).ToList();
     }
+
     public void DropAllProgress()    
     {
-        if (_levels.Count==0) _levels = GetLevelInfo();
+        if (_levels.Count==0) UpdatePathInfo();
         
         foreach (var level in _levels)
         {
             BlockLevel(level);
         }
     }
-
     
     public void SetLevelStars(int levelNumber, int stars)
     {
-        if (_levels.Count == 0) _levels= GetLevelInfo();
+        if (_levels.Count == 0) UpdatePathInfo();
 
         StageView view = _levels.Where(lvl => lvl.StageNumber == levelNumber).FirstOrDefault();
 
@@ -68,14 +68,14 @@ public class PathController : MonoBehaviour
 
             }
 
-            UpdateTargets();
+            UpdateTargetsView();
 
         }
     }
 
-    public void UpdateTargets()
+    public void UpdateTargetsView()
     {
-        if (_levels.Count == 0) _levels = GetLevelInfo();
+        if (_levels.Count == 0) UpdatePathInfo();
         //последний открытый с нулями
         int lastWinLvl = _levels.Where(l => l.Stars > 0 && !l.IsLocked).OrderByDescending(l=>l.StageNumber).FirstOrDefault().StageNumber;
         var checkLevel = _levels.Where(l => l.StageNumber == lastWinLvl + 1).FirstOrDefault();
@@ -104,7 +104,7 @@ public class PathController : MonoBehaviour
 
     public void UpdateAllLevelsFromStorage()
     {
-        if (_levels.Count == 0) _levels = GetLevelInfo();
+        if (_levels.Count == 0) UpdatePathInfo();
 
         foreach (var lvl in _levels)
         {
@@ -136,7 +136,7 @@ public class PathController : MonoBehaviour
     public int GetStarsCount(int levelMax)
     {
         int starsCount = 0;
-        if (_levels.Count == 0) _levels = GetLevelInfo();
+        if (_levels.Count == 0) UpdatePathInfo();
         for (int i = 0; i < levelMax; i++)
         {
             starsCount += _levels[i].Stars;

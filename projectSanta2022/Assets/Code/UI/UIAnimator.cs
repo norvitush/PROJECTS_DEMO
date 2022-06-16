@@ -16,6 +16,6 @@ public class UIAnimator : MonoBehaviour
     public void SmileCountBounce()
     {
         _smileCoinAnimator.SetTrigger("bounce");
-        UIWindowsManager.GetWindow<MainWindow>().SetSmilesInfo(GameService.Instance.ScoreGiftsCount);
+        UIWindowsManager.GetWindow<MainWindow>().SetSmilesInfo(GameService.Instance.SmilesScore);
     }
 }

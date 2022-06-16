@@ -90,7 +90,7 @@ namespace VOrb.CubesWar
                     if (_selfBody != null)
                     {
                       _PlayCubThrow = this.TryStartCoroutine(AnimationThrow(true,
-                          GameService.Instance.GunController.ThrowTarget));
+                          GameService.Instance.SantaController.ThrowTarget));
                     }
                     break;
                 case GiftAnimations.NewOne:
@@ -199,7 +199,7 @@ namespace VOrb.CubesWar
                     if (type == ChimneyState.Numered)
                     {
                         Debug.Log("Проверка по номеру дома");
-                        if (GameService.Instance.currentLevel.GetHousesNumber().Contains(Chimney.HouseNumber))
+                        if (GameService.Instance.CurrentLevel.GetHousesNumber().Contains(Chimney.HouseNumber))
                         {
                             Debug.Log("Номер есть в списке");
                         }
@@ -227,22 +227,22 @@ namespace VOrb.CubesWar
                     Debug.Log("Подарок доставлен!");
                     
                     GameService.VFXDriver.PoofStars(Chimney.ColliderPosition.SetYTo(Chimney.ColliderPosition.y-1.5f));
-                    int points = Mathf.Clamp(Mathf.CeilToInt(3 * GameService.Instance.currentLevel.Speed), 1, 10);
+                    int points = Mathf.Clamp(Mathf.CeilToInt(3 * GameService.Instance.CurrentLevel.Speed), 1, 10);
                     string outString = " +";
                     TextEffectBuilder textBuilder = new TextEffectBuilder().MakeMovable().MakeColored(new Color32(255,176,0,255));                     
                     if (SceneLoader.SceneSettings.IsTestMode)
                     {
                         points += 500;
                     }
-                    if (Vector3.Distance(GameService.Instance.GunController.transform.position, gameObject.transform.position) > 27f)
+                    if (Vector3.Distance(GameService.Instance.SantaController.transform.position, gameObject.transform.position) > 27f)
                     {
                         points *= 2;
                         outString = "HIT! "+outString;
                         textBuilder.MakeColored(Color.red).MakeScaleble(2);
                     }
 
-                    GameService.Instance.ScoreGiftsCount += points;
-                    UIWindowsManager.GetWindow<MainWindow>().SetTargetsInfo(++GameService.Instance.RightTargetCount);
+                    GameService.Instance.SmilesScore += points;
+                    UIWindowsManager.GetWindow<MainWindow>().SetTargetsInfo(++GameService.Instance.HitedTargetsCount);
 
                     UITextEffects.SplashMainScreen(outString + points, 
                         textBuilder

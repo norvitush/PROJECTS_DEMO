@@ -9,123 +9,80 @@ using System;
 namespace VOrb.CubesWar
 {
 
-    public enum LvlType
-    {
-        simple = 0,
-        bonus = 1,
-        extrahard = 2
-    }
-
-    public struct Player
-    {
-        public string name;
-        public int ID;
-        public bool inPlay;
-    }
-
     public interface  IGameManager
     {
         public ITouchSensetive ActiveNow { get; set; }
     }
 
-
     public class GameService : Singlton<GameService>, IGameManager
     {
-        [Header("Общие настройки")]
 
-        public bool PlayServicesConnected = false;
-        public bool Sounds = true;
-        public SafeInt NoAds;
-        public int GlobalScore;
-
-        [Header("Объект панели сенсора")]
-        public TouchRegistrator Sensor;
-
-        public int ScoreGiftsCount = 0;       
-        public int RightTargetCount= 0;
-        public int multiplyX = 1;
-
-        public int Current_level
-        {
-            get
-            {
-                if (currentLevel != null)
-                {
-                    return currentLevel.LevelNumber;
-                }
-                else
-                    return 0;
-            }
-        }
-        public LevelInfo currentLevel;
-
-
-
-
-        [Header("Игрок")]
-        //  Игрок
-        private Player CurPlayer = new Player();
-        public Player PlayerState => CurPlayer;
-        public string PlayerName => CurPlayer.name;
-
-
-
-        [Header("Время")]
-        // ВРЕМЯ
-        public int TimeCount = 0;
-        public TimersManager timeManager;
-
-
-
-        [Header("игровые объекты/контейнеры")]
+        private bool _sounds = true;
+        private SafeInt _noAds;
+        private int _globalScore;
+        private TouchRegistrator _sensor;
+        private int _smilesScoreCount = 0;
+        private int _hitedTargetsCount = 0;
+        private int _scoreMultiply = 1;
+        private LevelInfo _currentLevel;
+        private int TimeCount = 0;
         private static ITouchSensetive _activeNow;
         public ITouchSensetive ActiveNow { get => _activeNow; set => _activeNow = value; }
 
-        public GameObject fonContainer;
+        private GameObject _gameElements;
+        private GameObject _santaContainer;
 
-        public static Canvas MainCanvas;
-        public static GameObject UIMainWindowContainer;
-        public GameObject GameElements;
-        public GameObject GunContainer;
-        private GameObject TopUIContainer;
+        private static GiftsDriver _giftsController;
+        private static VFX_Manager _vFXDriver;
+        private SantaDriver _santaController;
+        private Joystik _gameJoystik;
+        private bool _gameStarted;
 
-        [Header("Игровые контроллеры")]
-
-        public static GiftsDriver CubsDriver;
-        public static VFX_Manager VFXDriver;
-        //ПУШКА
-        public Joystik GameJoystik;
-        public SantaDriver GunController;
-
-
-        // ИГРОВОЕ СОСТОЯНИЕ
         public bool GameStarted
         {
             get => _gameStarted;
             set
             {
                 _gameStarted = value;
-                CurPlayer.inPlay = value;
             }
         }
-                
 
-        private bool _gameStarted;
+        public bool Sounds { get => _sounds; set => _sounds = value; }
+        public SafeInt NoAds { get => _noAds; set => _noAds = value; }
+        public int GlobalScore { get => _globalScore; set => _globalScore = value; }
+        public TouchRegistrator Sensor { get => _sensor; set => _sensor = value; }
+        public int SmilesScore { get => _smilesScoreCount; set => _smilesScoreCount = value; }
+        public int HitedTargetsCount { get => _hitedTargetsCount; set => _hitedTargetsCount = value; }
 
+        public int Current_level
+        {
+            get
+            {
+                if (CurrentLevel != null)
+                {
+                    return CurrentLevel.LevelNumber;
+                }
+                else
+                    return 0;
+            }
+        }
+
+        public int ScoreMultiply  => _scoreMultiply; 
+        public LevelInfo CurrentLevel { get => _currentLevel; private set => _currentLevel = value; }
+        public string PlayerName => SceneLoader.SceneSettings.PlayerName;
+
+        public GameObject GameElements { get => _gameElements; private set => _gameElements = value; }
+        public GameObject SantaContainer { get => _santaContainer; private  set => _santaContainer = value; }
+        public static GiftsDriver GiftsController { get => _giftsController; private set => _giftsController = value; }
+        public static VFX_Manager VFXDriver { get => _vFXDriver; private set => _vFXDriver = value; }
+        public Joystik GameJoystik { get => _gameJoystik; private set => _gameJoystik = value; }
+        public SantaDriver SantaController { get => _santaController; private set => _santaController = value; }
 
         protected override void Init()
         {
             base.Init();
-
-            //Инициализация структуры игрока
-            CurPlayer.name = "";
-            CurPlayer.ID = 0;
-
-
-            //Сброс дефалтов
             Instance.GameStarted = false;
         }
-
 
         public void StartGame(LevelInfo level)
         {
@@ -138,22 +95,16 @@ namespace VOrb.CubesWar
             }
             else
             {
-#if UNITY_ANDROID && !UNITY_EDITOR
-             if (!IronSource.Agent.isInterstitialReady())
-             {
-                IronSource.Agent.loadInterstitial();
-             }                           
-#endif
                 if (level.Contains<NumberedHouseChimney>())
                 {
                     level.GenerateNumbersList(3);
                 }
-                RightTargetCount = 0;
-                ScoreGiftsCount = 0;
+                HitedTargetsCount = 0;
+                SmilesScore = 0;
 
-                currentLevel = level;
+                CurrentLevel = level;
 
-                CubsDriver.CleanState();
+                GiftsController.CleanState();
                 VFXDriver.StartSnow();
 
                 mn.SetProgressSlider(0.1f);
@@ -164,8 +115,8 @@ namespace VOrb.CubesWar
                 ObjectPoolManager.DeactivatePool(PooledObjectType.Gift);
                 DeactivateHomes();
 
-                GunController.ReArm();
-                SetActiveLvlTimer(true, true);
+                SantaController.ReArm();
+                SetActiveLvlTimer(value: true, drop_counter: true);
 
 
                 GameStarted = true;
@@ -195,12 +146,12 @@ namespace VOrb.CubesWar
                 ObjectPoolManager.DeactivatePool(PooledObjectType.Gift);
                 DeactivateHomes();
                 mn.OpenStartWindow();
-                currentLevel = null;
+                CurrentLevel = null;
             }
             else
             {
                 int lastVal = GlobalScore;
-                GlobalScore += ScoreGiftsCount;
+                GlobalScore += SmilesScore;
                 GameStorageOperator.PutToDevice(GameStorageOperator.PlayerParamNames.Smiles, GlobalScore);
                 mn.TryOpenLevelResultsPopup(
                 () =>
@@ -208,7 +159,7 @@ namespace VOrb.CubesWar
                    ObjectPoolManager.DeactivatePool(PooledObjectType.Gift);
                    DeactivateHomes();
                    mn.OpenStartWindow();
-                   currentLevel = null;
+                   CurrentLevel = null;
                    if (GlobalScore >= 2022 && lastVal < 2022)
                    {
                        UIWindowsManager.GetWindow<StartWindow>().ShowWinnerScreen();
@@ -218,7 +169,7 @@ namespace VOrb.CubesWar
 
                 
             }
-            CubsDriver.CleanState();
+            GiftsController.CleanState();
 
         }
 
@@ -251,46 +202,20 @@ namespace VOrb.CubesWar
             MainWindow mn = UIWindowsManager.GetWindow<MainWindow>();
             if (mn != null)
             {
-                UIMainWindowContainer = mn.UIContainer;
                 VFXDriver = mn.VFXContainer.AddComponent<VFX_Manager>();
-
                 GameElements = mn.GameElements;
-                GunContainer = mn.GunContainer;
-                
+                SantaContainer = mn.SantaContainer;
             }
-
-            TopUIContainer = SceneLoader.SceneSettings.TopUISensor;
-
         }
 
         //Обязяательно нужно вызвать перед работой с классом
         public void LoadFields()
         {
-
             JoystikContainer JoystikParent = SceneLoader.SceneSettings.TopUISensor.GetComponentInChildren<JoystikContainer>();
             GameJoystik = JoystikParent.gameObject.transform.GetComponentInChildren<Joystik>();
             GameJoystik?.Init();
-            GunController = GunContainer.GetComponentInChildren<SantaDriver>();
-            CurPlayer.name = SceneLoader.SceneSettings.PlayerName;
-            CubsDriver = new GiftsDriver();
-
-            MainCanvas = TopUIContainer.GetComponent<Canvas>();
-
-
-            ////фэйк прохождение уровней
-
-            //foreach (var level in DataBaseManager.Instance.LevelsInfo)
-            //{
-            //    if (level.LevelNumber<12)
-            //    {
-            //        UIWindowsManager.GetWindow<MainWindow>().StarsPath.SetLevelStars(level.LevelNumber, 3);
-            //    }
-            //    UIWindowsManager.GetWindow<MainWindow>().StarsPath.SetLevelStars(12, 2);
-            //    UIWindowsManager.GetWindow<MainWindow>().StarsPath.SetLevelStars(13, 1);
-            //    UIWindowsManager.GetWindow<MainWindow>().StarsPath.SetLevelStars(14, 1);
-
-
-            //}
+            SantaController = SantaContainer.GetComponentInChildren<SantaDriver>();
+            GiftsController = new GiftsDriver();
         }
 
 
@@ -327,17 +252,17 @@ namespace VOrb.CubesWar
         {
             TimeCount++;
         }
-        public void SetActiveLvlTimer(bool value, bool drop_count = false)
+        public void SetActiveLvlTimer(bool value, bool drop_counter = false)
         {
             TimersManager.SetPaused(OnTimerTick, !value);
-            TimeCount = drop_count ? 0 : TimeCount;
+            TimeCount = drop_counter ? 0 : TimeCount;
         }
 
 
         public int CalculateStarsResult()
         {
             int starscount = 3;
-            float procent = (float)RightTargetCount / currentLevel.Giftscount;
+            float procent = (float)HitedTargetsCount / CurrentLevel.Giftscount;
             if (procent < 0.5f)
             {
                 starscount = 0;              
