@@ -1,0 +1,65 @@
+﻿<Window x:Class="MVVM_tree_OrgViewer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MVVM_tree_OrgViewer"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="0.4*"/>
+        </Grid.RowDefinitions>
+        <TreeView Grid.Column="0" ItemsSource="{Binding Departments}" SelectedItemChanged="TreeView_SelectedItemChanged">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type local:Department}" ItemsSource="{Binding SubDepartments}" >
+
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="{Binding Title}" FontSize="14" FontWeight="Medium"  Foreground="DarkBlue"/>
+                        <TextBlock FontSize="10" HorizontalAlignment="Left">
+                            <TextBlock Name="txtLeft" Text=" Departments "  Foreground="Blue"/>
+                            <TextBlock Name="txtCountDep" Text="{Binding SubDepartmentsCount}"  Foreground="Blue"/>
+                            <TextBlock Name="txtspliter" Text=", Employees "  Foreground="Blue"/>
+                            <TextBlock Name="txtCountEmpl" Text="{Binding EmployeesCount}"  Foreground="DarkGreen"/>
+                            <!--<TextBlock Name="txtRight" Text="]" Foreground="Blue" />-->
+                        </TextBlock>
+                    </StackPanel>
+
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical">
+            <TextBlock Name="ManagerNameTitle" Text="Department Manager:"  Foreground="Blue" FontWeight="Medium" Height="22px"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Name="ManagerName" Text="{Binding SelectedDepartment.Manager.Name}" />
+                <TextBlock Name="Managerspliter" Text=" : " />
+                <TextBlock Name="ManagerPosition" Text="{Binding SelectedDepartment.Manager.Position}"/>
+            </StackPanel>
+            <TextBlock Name="SalaryTitle" Text="Salary:" Foreground="Blue" FontWeight="Medium"/>
+            <TextBlock Name="Salary" Text="{Binding SelectedDepartment.Manager.Salary}" HorizontalAlignment="Center"/>
+        </StackPanel>
+        <ListView Grid.Column="1" Grid.RowSpan="2" ItemsSource ="{Binding SelectedDepartment.Employees}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Salary" Width="150">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Salary}"  Foreground="DarkOrange">
+                                    <TextBlock Text="$"/>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Position" Width="120" DisplayMemberBinding="{Binding Position}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        
+    </Grid>
+</Window>
