@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VOrb.CubesWar
+namespace VOrb.SantaJam
 {
     [Serializable]
     class StartState : IGiftState 

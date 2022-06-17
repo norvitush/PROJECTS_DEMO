@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-namespace VOrb.CubesWar
+namespace VOrb.SantaJam
 {
     public struct PooledObject
     {

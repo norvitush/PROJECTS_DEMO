@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using VOrb.CubesWar;
+using VOrb.SantaJam;
 
 public class PathController : MonoBehaviour
 {

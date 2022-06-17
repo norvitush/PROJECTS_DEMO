@@ -1,8 +1,8 @@
 ﻿using System;
 using UnityEngine;
-using VOrb.CubesWar.Levels;
+using VOrb.SantaJam.Levels;
 
-namespace VOrb.CubesWar.Levels
+namespace VOrb.SantaJam.Levels
 {
     [Serializable]
     public sealed class LightHouseChimney : ChimneyFicha

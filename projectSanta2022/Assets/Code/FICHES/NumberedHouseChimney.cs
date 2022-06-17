@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VOrb.CubesWar.Levels
+namespace VOrb.SantaJam.Levels
 {
     [Serializable]
     public sealed class NumberedHouseChimney : ChimneyFicha

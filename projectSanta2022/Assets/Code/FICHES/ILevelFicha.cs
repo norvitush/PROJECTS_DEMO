@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace VOrb.CubesWar.Levels
+namespace VOrb.SantaJam.Levels
 {
     public interface ILevelFicha 
     {

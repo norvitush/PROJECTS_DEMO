@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VOrb;
 
-namespace VOrb.CubesWar
+namespace VOrb.SantaJam
 {
 
     [System.Serializable]

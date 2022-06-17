@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace VOrb.CubesWar
+namespace VOrb.SantaJam
 {
 
     public static class GameStorageOperator

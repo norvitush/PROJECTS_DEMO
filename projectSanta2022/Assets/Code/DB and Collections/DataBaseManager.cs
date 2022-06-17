@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using VOrb.CubesWar.Levels;
+using VOrb.SantaJam.Levels;
 
-namespace VOrb.CubesWar
+namespace VOrb.SantaJam
 {
 
     public class DataBaseManager : Singlton<DataBaseManager>

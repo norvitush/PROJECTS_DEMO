@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace VOrb.CubesWar
+namespace VOrb.SantaJam
 {
     [Serializable]
     public class ObjectPool

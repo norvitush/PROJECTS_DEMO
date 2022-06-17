@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-namespace VOrb.CubesWar
+namespace VOrb.SantaJam
 {
     public class PublishEvent<TData1,TData2>
     {

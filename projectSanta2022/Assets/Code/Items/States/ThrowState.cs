@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace VOrb.CubesWar
+namespace VOrb.SantaJam
 {
     [Serializable]
     class ThrowState : IGiftState

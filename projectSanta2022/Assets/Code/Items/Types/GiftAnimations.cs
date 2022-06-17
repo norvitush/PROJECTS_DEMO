@@ -1,4 +1,4 @@
-﻿namespace VOrb.CubesWar
+﻿namespace VOrb.SantaJam
 {
     public enum GiftAnimations
     {

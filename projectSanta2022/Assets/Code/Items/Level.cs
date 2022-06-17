@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace VOrb.CubesWar.Levels
+namespace VOrb.SantaJam.Levels
 {
     [Serializable]
     public class Level

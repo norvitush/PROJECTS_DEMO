@@ -6,7 +6,7 @@ using System;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace VOrb.CubesWar
+namespace VOrb.SantaJam
 {
 
     public class TouchRegistrator : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler

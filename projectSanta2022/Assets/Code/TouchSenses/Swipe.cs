@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace VOrb.CubesWar
+namespace VOrb.SantaJam
 {
     public struct Swipe
     {

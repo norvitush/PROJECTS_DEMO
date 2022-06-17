@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
-using VOrb.CubesWar;
+using VOrb.SantaJam;
 using TMPro;
 using System;
-using VOrb.CubesWar.Levels;
+using VOrb.SantaJam.Levels;
 
 public class StartPopupWindow : Window
 {

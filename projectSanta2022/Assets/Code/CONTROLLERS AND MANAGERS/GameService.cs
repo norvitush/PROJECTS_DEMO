@@ -2,11 +2,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Timers;
-using VOrb.CubesWar.VFX;
-using VOrb.CubesWar.Levels;
+using VOrb.SantaJam.VFX;
+using VOrb.SantaJam.Levels;
 using System;
 
-namespace VOrb.CubesWar
+namespace VOrb.SantaJam
 {
 
     public interface  IGameManager

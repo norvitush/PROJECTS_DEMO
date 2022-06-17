@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using VOrb.Extensions;
 
-namespace VOrb.CubesWar
+namespace VOrb.SantaJam
 {
     public class TrajectoryRenderer : MonoBehaviour
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace VOrb.CubesWar.Levels
+namespace VOrb.SantaJam.Levels
 {
     [Serializable]
     public sealed class SmokedChimney : ChimneyFicha

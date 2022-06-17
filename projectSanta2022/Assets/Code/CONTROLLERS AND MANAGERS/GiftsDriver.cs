@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace VOrb.CubesWar
+namespace VOrb.SantaJam
 {
     public class GiftsDriver
     {

@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using VOrb.CubesWar.VFX.Modules;
+using VOrb.SantaJam.VFX.Modules;
 
-namespace VOrb.CubesWar.VFX
+namespace VOrb.SantaJam.VFX
 {
     public class VFX_Manager: MonoBehaviour
     {        

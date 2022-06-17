@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace VOrb.CubesWar.Levels
+namespace VOrb.SantaJam.Levels
 {
     public class ChimneyFicha : ILevelFicha
     {

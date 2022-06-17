@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using VOrb.CubesWar;
+using VOrb.SantaJam;
 using TMPro;
 using UnityEngine.Events;
 using System;
 using System.Linq;
 using UnityEngine.UI;
-using VOrb.CubesWar.Levels;
+using VOrb.SantaJam.Levels;
 
 public class WindowPause : Window
 {

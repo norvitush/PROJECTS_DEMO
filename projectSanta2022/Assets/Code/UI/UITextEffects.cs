@@ -5,7 +5,7 @@ using UnityEngine;
 
 using VOrb;
 using UnityEngine.UI;
-namespace VOrb.CubesWar
+namespace VOrb.SantaJam
 {
 
 

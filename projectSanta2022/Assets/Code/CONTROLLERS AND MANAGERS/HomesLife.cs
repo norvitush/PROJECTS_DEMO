@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using VOrb.CubesWar;
-using VOrb.CubesWar.Levels;
+using VOrb.SantaJam;
+using VOrb.SantaJam.Levels;
 
-namespace VOrb.CubesWar
+namespace VOrb.SantaJam
 {
 
     public class HomesLife : MonoBehaviour

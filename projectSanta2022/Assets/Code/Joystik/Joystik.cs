@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-namespace VOrb.CubesWar
+namespace VOrb.SantaJam
 {
 
     public class Joystik: MonoBehaviour, ITouchSensetive 

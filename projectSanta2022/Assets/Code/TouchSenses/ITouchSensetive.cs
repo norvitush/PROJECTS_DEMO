@@ -1,6 +1,6 @@
 ﻿using UnityEngine.Events;
 
-namespace VOrb.CubesWar
+namespace VOrb.SantaJam
 {
     public interface ITouchSensetive
     {

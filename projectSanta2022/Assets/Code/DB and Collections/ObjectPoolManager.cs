@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using System.Linq;
 
 
-namespace VOrb.CubesWar
+namespace VOrb.SantaJam
 {
     public partial class ObjectPoolManager: Singlton<ObjectPoolManager>
     {

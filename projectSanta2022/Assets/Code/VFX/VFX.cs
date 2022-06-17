@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-namespace VOrb.CubesWar.VFX.Modules
+namespace VOrb.SantaJam.VFX.Modules
 {
  
         public class VFX

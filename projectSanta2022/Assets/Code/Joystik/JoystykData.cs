@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace VOrb.CubesWar
+namespace VOrb.SantaJam
 {
     [System.Serializable]
     public struct JoystykData
