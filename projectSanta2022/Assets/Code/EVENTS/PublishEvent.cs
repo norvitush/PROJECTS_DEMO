@@ -7,7 +7,7 @@ namespace VOrb.CubesWar
 {
     public class PublishEvent<TData1,TData2>
     {
-        private readonly List<Action<TData1, TData2>> _callbacks = new List<Action<TData1, TData2>>();
+        private List<Action<TData1, TData2>> _callbacks = new List<Action<TData1, TData2>>();
         public void Subscribe(Action<TData1, TData2> callback)
         {            
             _callbacks.Add(callback);
@@ -28,7 +28,7 @@ namespace VOrb.CubesWar
 
     public class PublishEvent<TData1>
     {
-        private readonly List<Action<TData1>> _callbacks = new List<Action<TData1>>();
+        private List<Action<TData1>> _callbacks = new List<Action<TData1>>();
         public void Subscribe(Action<TData1> callback)
         {
             _callbacks.Add(callback);

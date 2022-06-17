@@ -14,7 +14,7 @@ public class StartWindow : Window
     [SerializeField]private GameObject _levelsContainer;
     [SerializeField] private WindowPause _pauseWindow;
     [SerializeField] private TextMeshProUGUI _score;
-    [SerializeField] private win_window _Congratulation;
+    [SerializeField] private win_window _congratulation;
     [SerializeField] private GameObject _noads;
     [SerializeField] private GameObject _dimmedScreen;
     public bool Dimmed { set => _dimmedScreen.SetActive(value); }
@@ -49,7 +49,7 @@ public class StartWindow : Window
         else
         {
             _pauseWindow?.Close();
-            _Congratulation.gameObject.SetActive(false);
+            _congratulation.gameObject.SetActive(false);
             InvokeAfterLoad?.Invoke();
             InvokeAfterLoad = null;
             NoAdsShow = (GameService.Instance.NoAds == 0);
@@ -62,7 +62,7 @@ public class StartWindow : Window
     public void ShowWinnerScreen()
     {
         SoundService.PlaySound(Sound.Congratulation);
-        _Congratulation.gameObject.SetActive(true);
+        _congratulation.gameObject.SetActive(true);
     }
 
 public void BtnStartClick(int level = 1)

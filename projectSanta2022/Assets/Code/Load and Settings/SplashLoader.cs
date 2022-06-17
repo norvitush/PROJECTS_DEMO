@@ -6,17 +6,15 @@ using UnityEngine.UI;
 
 public class SplashLoader : MonoBehaviour
 {
-    public TextMeshProUGUI procentText;
-    public Image progressBar;
-    public GameObject ActivateNext;
+    [SerializeField] private TextMeshProUGUI _procentText;
+    [SerializeField] private Image _progressBar;
+    [SerializeField] private GameObject _activateNext;
 
-    // Start is called before the first frame update
     void Start()
     {
-        procentText.text = "0%";
-        IEnumerator loader = Loadding(1.5f);
-        progressBar.fillAmount = 0;
-        StartCoroutine(loader);
+        _procentText.text = "0%";
+        _progressBar.fillAmount = 0;
+        StartCoroutine(Loadding(1.5f));
     }
 
     IEnumerator Loadding(float tm)
@@ -29,10 +27,10 @@ public class SplashLoader : MonoBehaviour
             yield return new WaitForFixedUpdate();
             cnt -= Time.fixedDeltaTime;
             proc += TicVal; 
-            procentText.text = string.Format("{0}%",Mathf.Clamp(Mathf.RoundToInt(proc),0,100));
-            progressBar.fillAmount += TicVal/100;
+            _procentText.text = string.Format("{0}%",Mathf.Clamp(Mathf.RoundToInt(proc),0,100));
+            _progressBar.fillAmount += TicVal/100;
         }
-        ActivateNext.SetActive(true);
+        _activateNext?.SetActive(true);
     }
 
 }

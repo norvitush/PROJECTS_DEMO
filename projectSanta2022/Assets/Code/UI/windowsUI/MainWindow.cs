@@ -121,7 +121,6 @@ public class MainWindow : Window
                 GameService.Instance.ActiveNow = this;
             }
         };
-        //GameService.Instance.ActiveNow = _startInfoWindow;
         _startInfoWindow?.Open(ChangeCurrentWindow);  //opening the pause window  
     }
     public void OpenStartWindow()
@@ -133,9 +132,7 @@ public class MainWindow : Window
     }
     public void OpenRestartWindow()
     {
-        HideMainUI();
-        //GameService.Instance.ActiveNow = restart_window;
-        //restart_window?.Open(ChangeCurrentWindow);  //opening the settings window    
+        HideMainUI(); 
 
     }
 

@@ -7,10 +7,7 @@ using VOrb;
 
 public class UIWindowsManager : Singlton<UIWindowsManager>
 {
-    
-
     public List<Window> Windows;
-
 
     protected override void Init()
     {
@@ -22,7 +19,6 @@ public class UIWindowsManager : Singlton<UIWindowsManager>
         }
 
     }
- 
 
     void Start()
     {

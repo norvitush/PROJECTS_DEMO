@@ -31,8 +31,8 @@ namespace VOrb.CubesWar
 
             _currentSwipe = new Swipe
             {
-                swipeID = JoystykBaseConst.NO_ID,
-                isFinished = true
+                SwipeID = JoystykBaseConst.NO_ID,
+                IsFinished = true
             };
 
         }
@@ -50,12 +50,12 @@ namespace VOrb.CubesWar
         {
             _currentSwipe.screenPoint_start = eventData.position;
 
-            if (_currentSwipe.swipeID == JoystykBaseConst.NO_ID )
+            if (_currentSwipe.SwipeID == JoystykBaseConst.NO_ID )
             {
-                  _currentSwipe.swipeID = eventData.pointerId;
-                  _currentSwipe.beginTime = Time.unscaledTime;
+                  _currentSwipe.SwipeID = eventData.pointerId;
+                  _currentSwipe.BeginTime = Time.unscaledTime;
                             
-                  _currentSwipe.isFinished = false;
+                  _currentSwipe.IsFinished = false;
                   _currentSwipe.UpdateState(eventData);
             }
             _activeNow?.InvokeTouchEvent(TouchEvent.OnPointerDown, _currentSwipe);
@@ -68,13 +68,13 @@ namespace VOrb.CubesWar
         }
         private void DropMoving(PointerEventData eventData)
         {
-            if (_currentSwipe.isFinished)
+            if (_currentSwipe.IsFinished)
             {
                 return;
             }
             _currentSwipe.UpdateState(eventData);
-            _currentSwipe.swipeID = JoystykBaseConst.NO_ID;
-            _currentSwipe.isFinished = true;
+            _currentSwipe.SwipeID = JoystykBaseConst.NO_ID;
+            _currentSwipe.IsFinished = true;
 
             _activeNow?.InvokeTouchEvent(TouchEvent.OnDrop, _currentSwipe);
             

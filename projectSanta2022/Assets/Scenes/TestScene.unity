@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 54429870}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -44197,7 +44197,7 @@ MonoBehaviour:
   _levelsContainer: {fileID: 1158631563}
   _pauseWindow: {fileID: 83827274}
   _score: {fileID: 1768208046}
-  _Congratulation: {fileID: 2043389843}
+  _congratulation: {fileID: 2043389843}
   _noads: {fileID: 1235990872}
   _dimmedScreen: {fileID: 1766271195}
 --- !u!1 &1766271195

@@ -106,7 +106,7 @@ namespace VOrb.CubesWar
                 p_new_point = new Vector3(startTouch.screenPoint_start.x, startTouch.screenPoint_start.y, _p_JostikPos_nul.z);
                 mainTrans.position = _cam.ScreenToWorldPoint(p_new_point);
                 //mainTrans.position = new Vector3(mainTrans.position.x, mainTrans.position.y, JoystykBaseConst.ZOrder_zone);
-                SetNewNulPosition(startTouch.swipeID);
+                SetNewNulPosition(startTouch.SwipeID);
                 //OnPointerDownEvent(startTouch.fingerId);
                 return true;
             }
@@ -207,7 +207,7 @@ namespace VOrb.CubesWar
             if (SetPosition(data))
             {
                 DirectionChoosed = false;
-                TapID = data.swipeID;
+                TapID = data.SwipeID;
                 _TapStartTime = Time.realtimeSinceStartup;
                 EventPublisher.JoysticFirstTap.Publish(data.screenPoint_start);
                 // SwingButtonAlfa(JoystykBaseConst.BTN_DOWN);
@@ -215,7 +215,7 @@ namespace VOrb.CubesWar
         } 
         public void OnPointerUpEvent(Swipe data)
         {
-            if (TapID !=JoystykBaseConst.NO_ID && TapID==data.swipeID)
+            if (TapID !=JoystykBaseConst.NO_ID && TapID==data.SwipeID)
             {
                 //SwingButtonAlfa(JoystykBaseConst.BTN_UP);
                 _TapStartTime = 0;

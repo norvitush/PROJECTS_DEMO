@@ -13,7 +13,7 @@ using UnityEngine.EventSystems;
 /// Each window can have one child, a reference to it in the Current Window
 /// if another child is opened, the previous one is closed (and all its childs).
 /// </summary>
-public abstract class Window : MonoBehaviour, ITouchSensetive//IngameContainer, ITouchSensetive
+public abstract class Window : MonoBehaviour, ITouchSensetive
 {
     public bool IsOpen { get; private set; } = false;
     public Window CurrentWindow { get; protected set; } = null; //ссылка на дочернее окно, если открыто 

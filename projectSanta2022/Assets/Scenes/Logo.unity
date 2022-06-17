@@ -252,9 +252,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa96bd20a911cdb46b66a04c9dda19e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  procentText: {fileID: 1575321590}
-  progressBar: {fileID: 2100540158}
-  ActivateNext: {fileID: 5650338446520291795}
+  _procentText: {fileID: 1575321590}
+  _progressBar: {fileID: 2100540158}
+  _activateNext: {fileID: 5650338446520291795}
 --- !u!1001 &891851208
 PrefabInstance:
   m_ObjectHideFlags: 0

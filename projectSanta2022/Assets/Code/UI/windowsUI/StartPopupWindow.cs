@@ -1,12 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 using VOrb.CubesWar;
 using TMPro;
 using System;
 using VOrb.CubesWar.Levels;
-using System.Text;
 
 public class StartPopupWindow : Window
 {
@@ -19,8 +15,6 @@ public class StartPopupWindow : Window
     [SerializeField] private GameObject _iconSpeed;
     [SerializeField] private GameObject _iconBrick;
     [SerializeField] private TextMeshProUGUI _numberText;
-
-
 
     protected override void SelfClose()
     {
@@ -36,8 +30,7 @@ public class StartPopupWindow : Window
         TapEvent.RemoveAllListeners();
         SvipeEvent.RemoveAllListeners();
         TapEvent.AddListener(() => {});
-        SvipeEvent.AddListener(() => { });
-
+        SvipeEvent.AddListener(() => {});
         gameObject.SetActive(true);
         GameService.Instance.ActiveNow = this;
         afterInit?.Invoke();

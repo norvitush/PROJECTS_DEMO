@@ -5,13 +5,13 @@ using UnityEngine;
 
 public struct SafeInt
 {
-    private int value;
-    private int priprava;
+    private int _value;
+    private int _priprava;
 
     public SafeInt(int value = 0)
     {
-        priprava = Random.Range(int.MinValue / 6, int.MaxValue / 6);
-        this.value = value ^ priprava;
+        _priprava = Random.Range(int.MinValue / 6, int.MaxValue / 6);
+        this._value = value ^ _priprava;
     }
     public override int GetHashCode()
     {
@@ -38,7 +38,7 @@ public struct SafeInt
 
     public static implicit operator int(SafeInt safeInt)
     {
-        return safeInt.value ^ safeInt.priprava;
+        return safeInt._value ^ safeInt._priprava;
     }
 
     public static implicit operator SafeInt(int normalInt)
